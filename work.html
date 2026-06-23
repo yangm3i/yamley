@@ -512,9 +512,12 @@
   
   <style>
     .page-header {
-      padding: 140px 48px 24px;
+      padding: 140px 0 24px;
+    }
+    .page-header-inner {
       max-width: 1200px;
       margin: 0 auto;
+      padding: 0 48px;
     }
     .page-header h1 {
       font-size: clamp(36px, 6vw, 72px);
@@ -556,8 +559,10 @@
 </nav>
 
 <div class="page-header">
-  <h1><img src="images/work-header.png" alt="photography, ceramics, & visual art" style="width:100%; height:auto; display:block;" /></h1>
-  <p>relax and take a stroll through my virtual art exhibit</p>
+  <div class="page-header-inner">
+    <h1><img src="images/work-header.png" alt="photography, ceramics, & visual art" style="width:60%; height:auto; display:block;" /></h1>
+    <p>relax and take a stroll through my virtual art exhibit</p>
+  </div>
 </div>
 
 <section id="work" style="padding-top:24px;">
