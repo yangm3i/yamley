@@ -196,6 +196,8 @@
     .hero-cta {
       display: inline-flex;
       gap: 16px;
+      position: relative;
+      z-index: 1;
     }
     .btn {
       font-family: var(--font);
@@ -209,13 +211,17 @@
       transition: background 0.25s, color 0.25s;
     }
     .btn-dark {
-      background: var(--ink);
-      color: var(--cream);
-      border-color: var(--ink);
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--sand);
+      opacity: 0.75;
+      text-transform: lowercase;
+      letter-spacing: 0.15em;
+      font-weight: 700;
     }
-    .btn-dark:hover { background: #333; }
-    .btn-outline { color: var(--ink); }
-    .btn-outline:hover { background: var(--sage); border-color: var(--sage); }
+    .btn-dark:hover { background: var(--sage); border-color: var(--sage); opacity: 1; }
+    .btn-outline { color: var(--ink); border-color: var(--sand); opacity: 0.75; text-transform: lowercase; letter-spacing: 0.15em; }
+    .btn-outline:hover { background: var(--sage); border-color: var(--sage); opacity: 1; }
 
     .scroll-hint {
       position: absolute;
