@@ -244,6 +244,10 @@
       0%, 100% { opacity: 0.2; transform: translateX(-50%) translateY(0); }
       50%       { opacity: 0.45; transform: translateX(-50%) translateY(4px); }
     }
+    @keyframes scrollFadeCentered {
+      0%, 100% { opacity: 0.2; transform: translateY(0); }
+      50%       { opacity: 0.45; transform: translateY(4px); }
+    }
 
     /* ── SECTION SHARED ── */
     section { padding: 96px 48px; }
@@ -313,6 +317,35 @@
       letter-spacing: 0.12em;
       opacity: 0.45;
       text-transform: lowercase;
+    }
+
+    .photo-frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .photo-frame .swatch {
+      width: 100%;
+      display: block;
+      border-radius: 2px;
+    }
+    .photo-desc {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 18px;
+      background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0.05) 60%);
+      color: #fff;
+      font-size: 12px;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .photo-frame:hover .photo-desc {
+      opacity: 1;
     }
 
     /* placeholder swatches (replace with real <img> tags later) */
@@ -479,7 +512,7 @@
   
   <style>
     .page-header {
-      padding: 140px 48px 64px;
+      padding: 140px 48px 24px;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -513,14 +546,27 @@
 </nav>
 
 <div class="page-header">
-  <p class="section-label">Digital Gallery</p>
   <h1>photography, ceramics, <em style="color:var(--rose);font-style:normal">&amp;</em> visual art</h1>
   <p>relax and take a stroll through my virtual art exhibit</p>
 </div>
 
-<section id="work" style="padding-top:80px;">
+<section id="work" style="padding-top:24px;">
   <div class="work reveal">
-    <p class="section-label">Digital Gallery</p>
+    <pre style="font-family:monospace; font-size:9px; line-height:1.2; color:var(--ink); white-space:pre; text-align:center; opacity:0.5; user-select:none; margin:0 auto 24px;">⠀⠀⣠⡶⢶⣦⠀⠀⠀⣠⡶⢶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⢰⡟⠀⠀⢹⣧⠀⣸⠏⠀⠀⢻⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⣿⠁⠀⠀⠀⢿⣴⡿⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⣿⠀⠀⠀⠀⢸⣿⠇⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⢿⡆⠀⠀⠀⠈⣿⠀⠀⠀⠀⣸⡇⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⠀⠀
+⠀⢸⣷⠀⠀⠀⠀⠀⠀⠀⠀⢰⣟⠀⠀⠀⣀⣀⣀⣀⣀⣾⠋⠉⠹⣇⠀⠀⠀⠀
+⠀⣰⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣧⣶⠞⠋⠉⠀⠈⠉⠃⠀⠀⢠⡟⠀⠀⠀⠀
+⢠⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣦⡀⠀⠀
+⣸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢘⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢷⣄⠀
+⢿⡇⠸⣿⠀⠀⠀⠀⠀⠀⣴⣆⠀⢸⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡆
+⠸⣧⡀⠀⠀⢀⣶⣶⡆⠀⠈⠁⣰⡟⠁⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⠀⣸⡇
+⠀⠙⠻⣦⣄⣀⣀⣈⣁⣀⣤⠾⠋⠀⠀⠀⠀⠀⣀⣠⣴⡶⢿⡿⠿⠶⣶⠶⠟⠀
+⠀⠀⢠⡟⠉⢙⣿⠛⠋⠉⠁⠀⠀⣀⣠⣴⠶⠟⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠘⢿⣤⣘⣿⡀⠀⠀⢀⣴⡿⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠈⠉⠙⠛⠻⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</pre>
     <div class="tab-row">
       <button class="tab-btn active" data-tab="photography">Photography</button>
       <button class="tab-btn" data-tab="ceramics">Ceramics</button>
@@ -531,16 +577,11 @@
     <div class="tab-panel active" id="tab-photography">
       <div class="grid">
         <div class="grid-item">
-          <div class="ph" style="height:320px;background:linear-gradient(160deg,#D4C5A9,#B5C4B1);"></div>
-          <p class="caption">morning light study, 2024</p>
-        </div>
-        <div class="grid-item">
-          <div class="ph" style="height:220px;background:linear-gradient(160deg,#E8C4B8,#D4C5A9);"></div>
-          <p class="caption">still — kitchen table</p>
-        </div>
-        <div class="grid-item">
-          <div class="ph" style="height:260px;background:linear-gradient(160deg,#B5C4B1,#FAF9F7);border:1px solid #e2ddd6;"></div>
-          <p class="caption">fog series no. 3</p>
+          <div class="photo-frame">
+            <img class="swatch" src="images/IMG_6297.JPG" alt="A rainy day in Holland Road, Singapore" />
+            <div class="photo-desc">A rainy day in Holland Road. Singapore's urban landscape is intertwined with the tropical geography, giving the whole city a green utopian effect. The flowers that overhang over the side of the bridge is a beautiful site for local passersby.</div>
+          </div>
+          <p class="caption">singapore, feb 2026</p>
         </div>
       </div>
     </div>
@@ -583,28 +624,24 @@
   </div>
 </section>
 
-<!-- DIVIDER -->
-<div class="divider reveal">
-  <div class="divider-line"></div>
-  <span class="divider-spiral">◎</span>
-  <div class="divider-line"></div>
+<div class="scroll-hint" style="position:static; left:auto; transform:none; display:flex; justify-content:center; width:100%; margin:0 auto 48px; animation:scrollFadeCentered 3s ease-in-out infinite;">
+  <pre>⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⣤⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⠋⠀⠀⠙⢿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣸⡇⠀⠀⠀⠀⠀⠙⢿⣦⡀⠀⠀⢀⣀⣀⣠⣤⣀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣿⠇⠀⠀⠀⠀⠀⠀⠀⠙⠿⠿⠟⠛⠛⠋⠉⠉⠛⣷⡄⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢠⣿⢀⣀⡤⣤⢤⡤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀
+⠀⠀⠀⠀⣀⣤⣶⠿⠛⠋⠁⠁⠀⠀⠀⠉⠛⣯⣳⡀⠀⠀⠀⠀⠀⠀⢠⡿⠃⠀⠀
+⠀⣠⣶⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡻⣿⠀⠀⠀⠀⠀⣠⡿⠃⠀⠀⠀
+⢸⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⡴⠋⠉⢹⡆⠀⠀⢸⣿⠀⠀⠀⠀⢠⡿⠁⠀⠀⠀⠀
+⢸⣧⡀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⠈⠀⠀⢀⣮⠏⠀⠀⠀⠀⠘⣷⡀⠀⠀⠀⠀
+⠀⠙⠿⣶⣤⣀⠀⠀⠀⠀⠈⠻⢦⣤⣤⣤⡶⠟⠁⠀⠀⠀⠀⠀⠀⠘⣷⣄⠀⠀⠀
+⠀⠀⠀⠀⠉⠛⠿⣶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⡄
+⠀⠀⠀⠀⠀⠀⠀⠘⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡿
+⠀⠀⠀⠀⠀⠀⠀⠀⣿⡆⠀⠀⠀⠀⠀⠀⠀⣠⣶⣶⣦⣤⣤⣄⣀⣀⣤⡶⠛⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢹⡇⠀⠀⠀⠀⠀⣠⣾⠏⠀⠀⠀⠈⠉⠉⠙⠛⠉⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣄⠀⠀⣠⣾⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠛⠛⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</pre>
 </div>
-
-<!-- ABOUT -->
-
-
-<!-- CONTACT -->
-<section id="contact" style="margin-top:0" class="contact reveal">
-  <p class="section-label">Let's talk</p>
-  <h2>say hello</h2>
-  <p>commissions, collaborations, or just a nice email</p>
-  <a class="btn-light" href="mailto:hello@yam.studio">hello@yam.studio</a>
-  <div class="socials">
-    <a href="#">Instagram</a>
-    <a href="#">Are.na</a>
-    <a href="#">Substack</a>
-  </div>
-</section>
 
 <footer style="background: #F9DDD8; color: var(--ink); border-top: 1px solid rgba(0,0,0,0.06);">
   yamley &nbsp;·&nbsp; digital media scrapbook
