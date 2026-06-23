@@ -37,7 +37,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px 48px;
-      background: var(--cream);
+      background: linear-gradient(to bottom, var(--blush), var(--cream));
       border-bottom: 1px solid transparent;
       transition: border-color 0.3s;
     }
@@ -329,7 +329,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: center;
+      align-items: start;
     }
     @media (max-width: 780px) {
       .about-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -353,7 +353,7 @@
     .about-img-wrap .portrait {
       position: relative;
       z-index: 1;
-      width: 78%;
+      width: 68%;
       margin-left: auto;
       aspect-ratio: 4/5;
       background: var(--sage);
@@ -411,53 +411,49 @@
 
     /* ── CONTACT ── */
     .contact {
-      background: var(--ink);
-      color: var(--cream);
+      background: linear-gradient(to bottom, var(--cream), #F9DDD8);
+      color: var(--ink);
       text-align: center;
     }
     .contact .section-label { color: var(--rose); opacity: 1; }
     .contact h2 {
-      font-size: clamp(28px, 5vw, 56px);
-      font-weight: 200;
-      letter-spacing: -0.02em;
+      font-size: clamp(20px, 3vw, 36px);
+      font-weight: 300;
+      letter-spacing: -0.01em;
       margin-bottom: 16px;
+      color: #555555;
     }
     .contact p {
       font-size: 14px;
-      opacity: 0.5;
+      opacity: 0.6;
       margin-bottom: 40px;
       letter-spacing: 0.05em;
+      color: var(--ink);
     }
-    .contact .btn-light {
-      font-family: var(--font);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 14px 32px;
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 999px;
-      color: var(--cream);
-      transition: background 0.25s;
-    }
-    .contact .btn-light:hover { background: rgba(255,255,255,0.08); }
-
     .socials {
       display: flex;
       justify-content: center;
-      gap: 28px;
-      margin-top: 48px;
+      gap: 16px;
+      margin-top: 32px;
     }
     .socials a {
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--cream);
-      opacity: 0.3;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: lowercase;
+      color: var(--ink);
       text-decoration: none;
-      transition: opacity 0.2s;
+      padding: 12px 24px;
+      border: 1px solid var(--sand);
+      border-radius: 999px;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      opacity: 0.75;
     }
-    .socials a:hover { opacity: 1; }
+    .socials a:hover {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: var(--ink);
+      opacity: 1;
+    }
 
     /* ── FOOTER ── */
     footer {
@@ -514,7 +510,7 @@
     </div>
     <div class="about-text">
       <p class="section-label">About</p>
-      <h2>making things<br/><strong>slowly</strong>, on purpose</h2>
+      <h2>finding beauty in<br/><strong>small moments</strong> and objects</h2>
       <p>
         Hello! My name is Ashley — welcome to my photography and ceramics portfolio.
         I’m a girl in tech who enjoys pursuing my artistic hobbies and creating
@@ -561,14 +557,10 @@
 
 <!-- CONTACT -->
 <section id="contact" class="contact reveal">
-  <p class="section-label">Let's talk</p>
-  <h2>say hello</h2>
-  <p>commissions, collaborations, or just a nice email</p>
-  <a class="btn-light" href="mailto:hello@yam.studio">hello@yam.studio</a>
+  <h2>thanks for stopping by! feel free to send me a msg</h2>
   <div class="socials">
-    <a href="#">Instagram</a>
-    <a href="#">Are.na</a>
-    <a href="#">Substack</a>
+    <a href="#">moments_inmyhead</a>
+    <a href="#">yamley_ceramics</a>
   </div>
 </section>
 
