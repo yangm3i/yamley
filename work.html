@@ -525,11 +525,12 @@
       line-height: 1.05;
       margin-bottom: 12px;
     }
-    .page-header p {
+    .page-header p, .page-header-sub {
       font-size: 14px;
       letter-spacing: 0.12em;
       opacity: 0.45;
       text-transform: lowercase;
+      margin-bottom: 40px;
     }
 
     @media (max-width: 600px) {
@@ -557,13 +558,10 @@
   </ul>
 </nav>
 
-<div class="page-header">
-  <h1><img src="images/work-header.png" alt="photography, ceramics, & visual art" style="width:60%; height:auto; display:block;" /></h1>
-  <p style="max-width:1200px; margin:0 auto;">relax, get comfortable, and take a visual stroll through my digital art gallery.</p>
-</div>
-
-<section id="work" style="padding-top:24px;">
+<section id="work" style="padding-top:140px;">
   <div class="work reveal">
+    <h1 style="margin-bottom:8px;"><img src="images/work-header.png" alt="photography, ceramics, & visual art" style="width:60%; height:auto; display:block;" /></h1>
+    <p class="page-header-sub">relax, get comfortable, and take a visual stroll through my digital art gallery.</p>
     <div class="tab-row">
       <button class="tab-btn active" data-tab="photography">Photography</button>
       <button class="tab-btn" data-tab="ceramics">Ceramics</button>
