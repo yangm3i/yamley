@@ -292,6 +292,36 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
+    /* ── LOCATION FILTERS ── */
+    .location-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .loc-btn {
+      font-family: var(--font);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: lowercase;
+      background: none;
+      border: 1px solid var(--sand);
+      border-radius: 999px;
+      cursor: pointer;
+      padding: 6px 16px;
+      color: var(--ink);
+      opacity: 0.5;
+      transition: opacity 0.2s, background 0.2s, border-color 0.2s;
+    }
+    .loc-btn:hover { opacity: 0.85; }
+    .loc-btn.active {
+      opacity: 1;
+      background: var(--blush);
+      border-color: var(--rose);
+    }
+    .grid-item[data-location] { transition: opacity 0.25s; }
+    .grid-item.hidden { display: none; }
+
     /* masonry-ish grid */
     .grid {
       columns: 3;
@@ -570,22 +600,19 @@
 
     <!-- Photography grid -->
     <div class="tab-panel active" id="tab-photography">
-      <div class="grid" style="columns:2;">
-        <div class="grid-item">
-          <div class="photo-frame">
-            <img class="swatch" src="images/IMG_6297.JPG" alt="A rainy day in Holland Road, Singapore" />
-            <div class="photo-desc">A rainy day in Holland Road. Singapore's urban landscape is intertwined with the tropical geography, giving the whole city a green utopian effect. The flowers that overhang over the side of the bridge are a beautiful sight for local passersby.</div>
-          </div>
-          <p class="caption">singapore, feb 2026</p>
-        </div>
-        <div class="grid-item">
-          <div class="photo-frame">
-            <img class="swatch" src="images/IMG_6288.jpeg" alt="A cat sitting on the grass outside a glass building in Singapore" />
-            <div class="photo-desc">A little cat spotted outside the National Museum of Singapore, sitting unbothered on the lawn. A quiet, unexpected moment of stillness in the middle of a busy afternoon.</div>
-          </div>
-          <p class="caption">singapore, feb 2026</p>
-        </div>
+      <div class="location-filter-row">
+        <button class="loc-btn active" data-loc="singapore">singapore</button>
+        <button class="loc-btn" data-loc="korea">korea</button>
+        <button class="loc-btn" data-loc="malaysia">malaysia</button>
+        <button class="loc-btn" data-loc="thailand">thailand</button>
+        <button class="loc-btn" data-loc="japan">japan</button>
+        <button class="loc-btn" data-loc="italy">italy</button>
+        <button class="loc-btn" data-loc="new-york">new york</button>
+        <button class="loc-btn" data-loc="san-francisco">san francisco</button>
+        <button class="loc-btn" data-loc="vancouver">vancouver</button>
+        <button class="loc-btn" data-loc="toronto">toronto</button>
       </div>
+      <div class="grid" id="photo-grid" style="columns:2;"></div>
     </div>
 
     <!-- Ceramics grid -->
@@ -650,6 +677,43 @@
 </footer>
 
 <script>
+  // ── PHOTO DATA ──────────────────────────────────────────────
+  // To add a photo: drop the image in the images/ folder, then
+  // add one object below with src, location, caption, and desc.
+  const photos = [
+    {
+      src: "images/singapore/IMG_6297.JPG",
+      location: "singapore",
+      caption: "singapore, feb 2026",
+      desc: "A rainy day in Holland Road. Singapore's urban landscape is intertwined with the tropical geography, giving the whole city a green utopian effect. The flowers that overhang over the side of the bridge are a beautiful sight for local passersby."
+    },
+    {
+      src: "images/singapore/IMG_6288.jpeg",
+      location: "singapore",
+      caption: "singapore, feb 2026",
+      desc: "A little cat spotted outside the National Museum of Singapore, sitting unbothered on the lawn. A quiet, unexpected moment of stillness in the middle of a busy afternoon."
+    },
+  ];
+  // ────────────────────────────────────────────────────────────
+
+  function renderPhotos(loc) {
+    const grid = document.getElementById('photo-grid');
+    grid.innerHTML = photos
+      .filter(p => p.location === loc)
+      .map(p => `
+        <div class="grid-item" data-location="${p.location}">
+          <div class="photo-frame">
+            <img class="swatch" src="${p.src}" alt="${p.caption}" />
+            <div class="photo-desc">${p.desc}</div>
+          </div>
+          <p class="caption">${p.caption}</p>
+        </div>`)
+      .join('');
+  }
+
+  // Render default location on load
+  renderPhotos('singapore');
+
   // Sticky nav border
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
@@ -666,29 +730,12 @@
     });
   });
 
-  // Scroll reveal
-  const observer = new IntersectionObserver(
-    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-    { threshold: 0.12 }
-  );
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-
-
-<script>
-  // Sticky nav border
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  });
-
-  // Tab switching
-  document.querySelectorAll('.tab-btn').forEach(btn => {
+  // Location filter pills
+  document.querySelectorAll('.loc-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.loc-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      renderPhotos(btn.dataset.loc);
     });
   });
 
