@@ -322,6 +322,62 @@
     .grid-item[data-location] { transition: opacity 0.25s; }
     .grid-item.hidden { display: none; }
 
+    /* ── CERAMICS CAROUSEL ── */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.35s ease;
+    }
+    .carousel-track img {
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+      display: block;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(250,249,247,0.85);
+      border: none;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      color: var(--ink);
+    }
+    .carousel:hover .carousel-btn { opacity: 1; }
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+    .carousel-btn:disabled { opacity: 0 !important; cursor: default; }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 8px;
+    }
+    .carousel-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--sand);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s;
+    }
+    .carousel-dot.active { background: var(--ink); }
+
     /* masonry-ish grid */
     .grid {
       columns: 3;
@@ -617,20 +673,7 @@
 
     <!-- Ceramics grid -->
     <div class="tab-panel" id="tab-ceramics">
-      <div class="grid">
-        <div class="grid-item">
-          <div class="ph" style="height:280px;background:linear-gradient(160deg,#c8b49a,#b8a888);"></div>
-          <p class="caption">moon vase — stoneware</p>
-        </div>
-        <div class="grid-item">
-          <div class="ph" style="height:340px;background:linear-gradient(160deg,#E8C4B8,#c8b49a);"></div>
-          <p class="caption">blush glaze cups, set of 2</p>
-        </div>
-        <div class="grid-item">
-          <div class="ph" style="height:210px;background:linear-gradient(160deg,#B5C4B1,#98aa95);"></div>
-          <p class="caption">sage bowl, 2024</p>
-        </div>
-      </div>
+      <div class="grid" id="ceramics-grid"></div>
     </div>
 
     <!-- Visual Art grid -->
@@ -751,6 +794,75 @@
       renderPhotos(btn.dataset.loc);
     });
   });
+
+  // ── CERAMICS DATA ───────────────────────────────────────────
+  // Each piece has a caption, description, and array of images.
+  const ceramics = [
+    // {
+    //   caption: "moon vase — stoneware, 2024",
+    //   desc: "",
+    //   images: ["images/ceramics/IMG_001.jpeg", "images/ceramics/IMG_002.jpeg"]
+    // },
+  ];
+  // ────────────────────────────────────────────────────────────
+
+  function renderCeramics() {
+    const grid = document.getElementById('ceramics-grid');
+    grid.innerHTML = ceramics.map((piece, pi) => {
+      const imgs = piece.images.map(src =>
+        `<img src="${src}" alt="${piece.caption}" />`
+      ).join('');
+      const dots = piece.images.length > 1
+        ? `<div class="carousel-dots">${piece.images.map((_, i) =>
+            `<button class="carousel-dot${i === 0 ? ' active' : ''}" data-piece="${pi}" data-i="${i}"></button>`
+          ).join('')}</div>`
+        : '';
+      const btns = piece.images.length > 1
+        ? `<button class="carousel-btn prev" data-piece="${pi}">&#8592;</button>
+           <button class="carousel-btn next" data-piece="${pi}">&#8594;</button>`
+        : '';
+      return `
+        <div class="grid-item">
+          <div class="carousel" id="carousel-${pi}">
+            <div class="carousel-track">${imgs}</div>
+            ${btns}
+          </div>
+          ${dots}
+          <p class="caption">${piece.caption}</p>
+          ${piece.desc ? `<div class="photo-desc">${piece.desc}</div>` : ''}
+        </div>`;
+    }).join('');
+
+    // Wire up carousel controls
+    const state = ceramics.map(() => ({ idx: 0 }));
+
+    function goTo(pi, idx) {
+      const track = document.querySelector(`#carousel-${pi} .carousel-track`);
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      state[pi].idx = idx;
+      document.querySelectorAll(`.carousel-dot[data-piece="${pi}"]`).forEach(d => {
+        d.classList.toggle('active', +d.dataset.i === idx);
+      });
+    }
+
+    document.querySelectorAll('.carousel-btn.prev').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pi = +btn.dataset.piece;
+        goTo(pi, Math.max(0, state[pi].idx - 1));
+      });
+    });
+    document.querySelectorAll('.carousel-btn.next').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pi = +btn.dataset.piece;
+        goTo(pi, Math.min(ceramics[pi].images.length - 1, state[pi].idx + 1));
+      });
+    });
+    document.querySelectorAll('.carousel-dot').forEach(dot => {
+      dot.addEventListener('click', () => goTo(+dot.dataset.piece, +dot.dataset.i));
+    });
+  }
+
+  renderCeramics();
 
   // Scroll reveal
   const observer = new IntersectionObserver(
