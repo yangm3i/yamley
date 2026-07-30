@@ -270,8 +270,7 @@
 
     .tab-row {
       display: flex;
-      gap: 0;
-      border-bottom: 1px solid #B0C4D1;
+      gap: 10px;
       margin-bottom: 56px;
     }
     .tab-btn {
@@ -279,19 +278,30 @@
       font-size: 12px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      background: none;
-      border: none;
       cursor: pointer;
-      padding: 12px 32px 12px 0;
+      padding: 10px 20px;
       color: var(--ink);
-      opacity: 0.35;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      transition: opacity 0.2s, border-color 0.2s;
+      opacity: 0.85;
+      background: #EAEAEA;
+      border: 1.5px solid #9C9C9C;
+      border-radius: 4px;
+      transition: opacity 0.2s, background 0.2s, border-color 0.2s;
     }
     .tab-btn.active {
       opacity: 1;
-      border-bottom-color: var(--rose);
+      background: var(--blush);
+      border-color: var(--rose);
+    }
+    .panel-ascii {
+      font-size: 26px;
+      letter-spacing: 0.05em;
+      opacity: 0.5;
+      color: var(--ink);
+      margin: 6px 0 10px;
+    }
+    #tab-ceramics .panel-ascii,
+    #tab-visual-art .panel-ascii {
+      font-size: 42px;
     }
 
     .tab-panel { display: none; }
@@ -300,29 +310,48 @@
     /* ── LOCATION FILTERS ── */
     .location-filter-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 40px;
+      flex-wrap: nowrap;
+      gap: 0;
+      position: relative;
+      z-index: 1;
     }
     .loc-btn {
       font-family: var(--font);
-      font-size: 11px;
-      letter-spacing: 0.15em;
+      font-size: 8.5px;
+      letter-spacing: 0.04em;
       text-transform: lowercase;
-      background: none;
-      border: 1px solid #B0C4D1;
-      border-radius: 999px;
+      background: var(--cream);
+      border: 1.5px solid #ADADAD;
+      border-bottom: none;
+      border-radius: 5px 5px 0 0;
       cursor: pointer;
-      padding: 6px 16px;
+      padding: 7px 6px 8px;
       color: var(--ink);
-      opacity: 0.5;
+      opacity: 0.65;
+      position: relative;
+      top: 1.5px;
+      flex: 1 1 0;
+      white-space: nowrap;
+      text-align: center;
       transition: opacity 0.2s, background 0.2s, border-color 0.2s;
     }
-    .loc-btn:hover { opacity: 0.85; }
+    .loc-btn + .loc-btn { margin-left: -1.5px; }
+    .loc-btn:hover { opacity: 1; }
     .loc-btn.active {
       opacity: 1;
       background: var(--blush);
-      border-color: var(--rose);
+      border-color: #33586A;
+      z-index: 1;
+    }
+    .photo-frame-panel {
+      border: 1.5px solid #33586A;
+      border-radius: 0 6px 6px 6px;
+      padding: 28px 24px 24px;
+      margin-bottom: 40px;
+    }
+    /* no tag/tab row above this panel, so all corners round evenly */
+    .photo-frame-panel--plain {
+      border-radius: 6px;
     }
     .grid-item[data-location] { transition: opacity 0.25s; }
     .grid-item.hidden { display: none; }
@@ -688,6 +717,7 @@
 
     <!-- Photography grid -->
     <div class="tab-panel active" id="tab-photography">
+      <div class="panel-ascii">[◉¯]</div>
       <div class="location-filter-row">
         <button class="loc-btn active" data-loc="singapore">singapore</button>
         <button class="loc-btn" data-loc="korea">korea</button>
@@ -700,28 +730,36 @@
         <button class="loc-btn" data-loc="vancouver">vancouver</button>
         <button class="loc-btn" data-loc="toronto">toronto</button>
       </div>
-      <div class="grid" id="photo-grid" style="columns:2;"></div>
+      <div class="photo-frame-panel">
+        <div class="grid" id="photo-grid" style="columns:2;"></div>
+      </div>
     </div>
 
     <!-- Ceramics grid -->
     <div class="tab-panel" id="tab-ceramics">
-      <div class="grid" id="ceramics-grid"></div>
+      <div class="panel-ascii">𓐐</div>
+      <div class="photo-frame-panel photo-frame-panel--plain">
+        <div class="grid" id="ceramics-grid"></div>
+      </div>
     </div>
 
     <!-- Visual Art grid -->
     <div class="tab-panel" id="tab-visual-art">
-      <div class="grid">
-        <div class="grid-item">
-          <div class="ph" style="height:300px;background:linear-gradient(160deg,#E8C4B8,#B5C4B1);"></div>
-          <p class="caption">untitled — gouache on paper</p>
-        </div>
-        <div class="grid-item">
-          <div class="ph" style="height:260px;background:linear-gradient(160deg,#D4C5A9,#E8C4B8);"></div>
-          <p class="caption">soft study no. 1</p>
-        </div>
-        <div class="grid-item">
-          <div class="ph" style="height:320px;background:linear-gradient(160deg,#B5C4B1,#D4C5A9);"></div>
-          <p class="caption">colour field sketch</p>
+      <div class="panel-ascii">✎𓂃</div>
+      <div class="photo-frame-panel photo-frame-panel--plain">
+        <div class="grid">
+          <div class="grid-item">
+            <div class="ph" style="height:300px;background:linear-gradient(160deg,#E8C4B8,#B5C4B1);"></div>
+            <p class="caption">untitled — gouache on paper</p>
+          </div>
+          <div class="grid-item">
+            <div class="ph" style="height:260px;background:linear-gradient(160deg,#D4C5A9,#E8C4B8);"></div>
+            <p class="caption">soft study no. 1</p>
+          </div>
+          <div class="grid-item">
+            <div class="ph" style="height:320px;background:linear-gradient(160deg,#B5C4B1,#D4C5A9);"></div>
+            <p class="caption">colour field sketch</p>
+          </div>
         </div>
       </div>
     </div>
