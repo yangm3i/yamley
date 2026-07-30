@@ -339,6 +339,7 @@
     }
     .carousel-track img {
       width: 100%;
+      aspect-ratio: 2421 / 2996;
       flex-shrink: 0;
       object-fit: cover;
       display: block;
@@ -382,6 +383,7 @@
       transition: background 0.2s;
     }
     .carousel-dot.active { background: var(--ink); }
+    .carousel-dots--spacer { visibility: hidden; pointer-events: none; }
 
     /* masonry-ish grid */
     .grid {
@@ -390,6 +392,15 @@
     }
     @media (max-width: 900px) { .grid { columns: 2; } }
     @media (max-width: 560px) { .grid { columns: 1; } }
+
+    /* ceramics grid uses a real row-major grid so pieces land in predictable left-to-right rows */
+    #ceramics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+    @media (max-width: 600px) { #ceramics-grid { grid-template-columns: 1fr; } }
 
     .grid-item {
       break-inside: avoid;
@@ -823,6 +834,52 @@
       desc: "",
       images: ["images/ceramics/IMG_9079.jpeg"]
     },
+    {
+      caption: "rice bowl - ocean wave glaze",
+      desc: "",
+      images: [
+        "images/ceramics/IMG_0698.jpeg",
+        "images/ceramics/IMG_0695.jpeg",
+        "images/ceramics/IMG_0697.jpeg",
+        "images/ceramics/IMG_0713.jpeg"
+      ]
+    },
+    {
+      caption: "snoopy trinket dish",
+      desc: "",
+      images: [
+        "images/ceramics/IMG_5882.jpeg",
+        "images/ceramics/snoopy dish.png"
+      ]
+    },
+    {
+      caption: "hand painted bunny teapot",
+      desc: "",
+      images: [
+        "images/ceramics/IMG_7050.jpeg",
+        "images/ceramics/IMG_7049.jpeg",
+        "images/ceramics/IMG_7056.jpeg",
+        "images/ceramics/IMG_7062.jpeg",
+        "images/ceramics/IMG_7058.jpeg"
+      ]
+    },
+    {
+      caption: "hand painted flower bowl",
+      desc: "",
+      images: [
+        "images/ceramics/SCRL_0002.JPG",
+        "images/ceramics/IMG_0091.jpeg"
+      ]
+    },
+    {
+      caption: "small bubble trinket dish - ocean pebble",
+      desc: "",
+      images: [
+        "images/ceramics/IMG_0074.jpeg",
+        "images/ceramics/IMG_0094.jpeg",
+        "images/ceramics/IMG_0095.jpeg"
+      ]
+    },
   ];
   // ────────────────────────────────────────────────────────────
 
@@ -832,11 +889,9 @@
       const imgs = piece.images.map(src =>
         `<img src="${src}" alt="${piece.caption}" />`
       ).join('');
-      const dots = piece.images.length > 1
-        ? `<div class="carousel-dots">${piece.images.map((_, i) =>
+      const dots = `<div class="carousel-dots${piece.images.length > 1 ? '' : ' carousel-dots--spacer'}">${piece.images.map((_, i) =>
             `<button class="carousel-dot${i === 0 ? ' active' : ''}" data-piece="${pi}" data-i="${i}"></button>`
-          ).join('')}</div>`
-        : '';
+          ).join('')}</div>`;
       const btns = piece.images.length > 1
         ? `<button class="carousel-btn prev" data-piece="${pi}">&#8592;</button>
            <button class="carousel-btn next" data-piece="${pi}">&#8594;</button>`
