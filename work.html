@@ -41,8 +41,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px 48px;
-      background: var(--cream);
-      border-bottom: 1px solid transparent;
+      background: #FFFFFF;
+      border-bottom: 1px solid #DDDDDD;
       transition: border-color 0.3s;
     }
 
@@ -67,19 +67,34 @@
 
     .nav-links {
       display: flex;
-      gap: 36px;
+      gap: 10px;
       list-style: none;
     }
     .nav-links a {
+      display: inline-block;
       font-size: 11px;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       text-decoration: none;
       color: var(--ink);
-      opacity: 0.35;
-      transition: opacity 0.2s;
+      opacity: 0.85;
+      padding: 8px 16px;
+      background: #FFFFFF;
+      border-top: 2px solid #FFFFFF;
+      border-left: 2px solid #FFFFFF;
+      border-bottom: 2px solid #9C9C9C;
+      border-right: 2px solid #9C9C9C;
+      transition: opacity 0.15s, background 0.15s;
     }
     .nav-links a:hover { opacity: 1; }
+    .nav-links a.active {
+      opacity: 1;
+      background: var(--blush);
+      border-top: 2px solid var(--rose);
+      border-left: 2px solid var(--rose);
+      border-bottom: 2px solid #FFFFFF;
+      border-right: 2px solid #FFFFFF;
+    }
 
     /* ── HERO ── */
     .hero {
@@ -271,7 +286,7 @@
     .tab-row {
       display: flex;
       gap: 10px;
-      margin-bottom: 56px;
+      margin-bottom: 40px;
     }
     .tab-btn {
       font-family: var(--font);
@@ -280,30 +295,24 @@
       text-transform: uppercase;
       cursor: pointer;
       padding: 10px 20px;
-      color: var(--ink);
+      color: #4A4A4A;
       opacity: 0.85;
-      background: #EAEAEA;
-      border: 1.5px solid #9C9C9C;
-      border-radius: 4px;
-      transition: opacity 0.2s, background 0.2s, border-color 0.2s;
+      background: #FFFFFF;
+      border-top: 2px solid #FFFFFF;
+      border-left: 2px solid #FFFFFF;
+      border-bottom: 2px solid #9C9C9C;
+      border-right: 2px solid #9C9C9C;
+      transition: opacity 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
     }
     .tab-btn.active {
       opacity: 1;
-      background: var(--blush);
-      border-color: var(--rose);
-    }
-    .panel-ascii {
-      font-size: 26px;
-      letter-spacing: 0.05em;
-      opacity: 0.5;
       color: var(--ink);
-      margin: 6px 0 10px;
+      background: var(--blush);
+      border-top: 2px solid var(--rose);
+      border-left: 2px solid var(--rose);
+      border-bottom: 2px solid #FFFFFF;
+      border-right: 2px solid #FFFFFF;
     }
-    #tab-ceramics .panel-ascii,
-    #tab-visual-art .panel-ascii {
-      font-size: 42px;
-    }
-
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
@@ -323,7 +332,7 @@
       background: var(--cream);
       border: 1.5px solid #ADADAD;
       border-bottom: none;
-      border-radius: 5px 5px 0 0;
+      border-radius: 0;
       cursor: pointer;
       padding: 7px 6px 8px;
       color: var(--ink);
@@ -345,13 +354,12 @@
     }
     .photo-frame-panel {
       border: 1.5px solid #33586A;
-      border-radius: 0 6px 6px 6px;
+      border-radius: 0;
       padding: 28px 24px 24px;
       margin-bottom: 40px;
     }
-    /* no tag/tab row above this panel, so all corners round evenly */
     .photo-frame-panel--plain {
-      border-radius: 6px;
+      border-radius: 0;
     }
     .grid-item[data-location] { transition: opacity 0.25s; }
     .grid-item.hidden { display: none; }
@@ -680,6 +688,20 @@
       text-transform: lowercase;
       margin-bottom: 40px;
     }
+    .page-header-sub {
+      display: block;
+      max-width: 1200px;
+      box-sizing: border-box;
+      font-size: 12px;
+      color: #4A4A4A;
+      opacity: 1;
+      border: 1.5px solid #D9CCB8;
+      background: #FFFFFF;
+      padding: 10px 18px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 0;
+    }
 
     @media (max-width: 600px) {
       nav { padding: 16px 20px; }
@@ -700,7 +722,7 @@
   </a>
   <ul class="nav-links">
     <li><a href="home.html">Home</a></li>
-    <li><a href="work.html" style="color:var(--ink); opacity:1">Work</a></li>
+    <li><a href="work.html" class="active">Work</a></li>
     <li><a href="about.html">About</a></li>
   </ul>
 </nav>
@@ -717,7 +739,6 @@
 
     <!-- Photography grid -->
     <div class="tab-panel active" id="tab-photography">
-      <div class="panel-ascii">[◉¯]</div>
       <div class="location-filter-row">
         <button class="loc-btn active" data-loc="singapore">singapore</button>
         <button class="loc-btn" data-loc="korea">korea</button>
@@ -737,7 +758,6 @@
 
     <!-- Ceramics grid -->
     <div class="tab-panel" id="tab-ceramics">
-      <div class="panel-ascii">𓐐</div>
       <div class="photo-frame-panel photo-frame-panel--plain">
         <div class="grid" id="ceramics-grid"></div>
       </div>
@@ -745,7 +765,6 @@
 
     <!-- Visual Art grid -->
     <div class="tab-panel" id="tab-visual-art">
-      <div class="panel-ascii">✎𓂃</div>
       <div class="photo-frame-panel photo-frame-panel--plain">
         <div class="grid">
           <div class="grid-item">
