@@ -460,20 +460,27 @@
       margin-top: 32px;
     }
     .socials a {
+      display: inline-block;
       font-size: 11px;
       letter-spacing: 0.15em;
       text-transform: lowercase;
       color: var(--ink);
       text-decoration: none;
       padding: 12px 24px;
-      border: 1px solid var(--sage);
-      border-radius: 999px;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-      opacity: 0.75;
+      background: #FFFFFF;
+      border-top: 2px solid #FFFFFF;
+      border-left: 2px solid #FFFFFF;
+      border-bottom: 2px solid var(--sage);
+      border-right: 2px solid var(--sage);
+      transition: background 0.15s, border-color 0.15s;
+      opacity: 0.9;
     }
     .socials a:hover {
-      background: var(--sage);
-      border-color: var(--sage);
+      background: #E5EAE4;
+      border-top: 2px solid var(--sage);
+      border-left: 2px solid var(--sage);
+      border-bottom: 2px solid #FFFFFF;
+      border-right: 2px solid #FFFFFF;
       color: var(--ink);
       opacity: 1;
     }
@@ -539,7 +546,7 @@
         <img src="images/vancouver/IMG_9254.jpg" alt="Ashley taking a mirror selfie in a reflective storefront window" />
       </div>
     </div>
-    <div class="about-text">
+    <div class="about-text" style="border: 1.5px solid #33586A; background: #FFFFFF; box-shadow: 4px 4px 0 #9C9C9C; padding: 28px 24px 24px; box-sizing: border-box;">
       <p class="section-label">nice to meet you !</p>
       <p>
         Hello! My name is Ashley — welcome to my photography and ceramics portfolio.
