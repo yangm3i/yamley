@@ -17,6 +17,9 @@
       --sage:    #B5C4B1;
       --sand:    #D4C5A9;
       --blush:   #CDE3ED;
+      --soft-grey: #C4C4C4;
+      --sage-light: #DCE6D9;
+      --sage-dark: #A3B89D;
       --font:    'Roboto Mono', monospace;
     }
 
@@ -78,22 +81,23 @@
       text-decoration: none;
       color: var(--ink);
       opacity: 0.85;
-      padding: 8px 16px;
+      padding: 6px 16px;
       background: #FFFFFF;
-      border-top: 2px solid #FFFFFF;
-      border-left: 2px solid #FFFFFF;
-      border-bottom: 2px solid #9C9C9C;
-      border-right: 2px solid #9C9C9C;
+      border-top: 1.5px solid #FFFFFF;
+      border-left: 1.5px solid #FFFFFF;
+      border-bottom: 1.5px solid var(--soft-grey);
+      border-right: 1.5px solid var(--soft-grey);
+      border-radius: 8px;
       transition: opacity 0.15s, background 0.15s;
     }
     .nav-links a:hover { opacity: 1; }
     .nav-links a.active {
       opacity: 1;
-      background: #DCE6D9;
-      border-top: 2px solid var(--sage);
-      border-left: 2px solid var(--sage);
-      border-bottom: 2px solid #FFFFFF;
-      border-right: 2px solid #FFFFFF;
+      background: var(--sage-light);
+      border-top: 1.5px solid var(--sage-dark);
+      border-left: 1.5px solid var(--sage-dark);
+      border-bottom: 1.5px solid #FFFFFF;
+      border-right: 1.5px solid #FFFFFF;
     }
 
     /* ── HERO ── */
