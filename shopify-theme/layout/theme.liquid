@@ -19,6 +19,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Pixelify+Sans:wght@400..700&family=Inter:ital,wght@0,100..900;1,100..900&family=Doto:wght@400..900&family=Silkscreen:wght@400;700&family=Bitcount+Single+Ink&family=National+Park:wght@200..800&display=swap" rel="stylesheet">
 
+    {%- comment -%} Animated cursor — "Stylized Miffy Pack Cursors" from rw-designer.com/cursor-set/stylized-miffy-pack {%- endcomment -%}
+    <style type="text/css">
+      @keyframes rwdcur251276 {
+        0%,24.9%,100% {cursor:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABoElEQVRYhe2XvY2EMBCFHyeauCaugC3GFhEFkLHxklEAEYJelnwpYinDFxyDzOAxBiFrg3uZMXi++fHYJEo9DGb1/T1BZKUAkBcZbj/fAGBiQ6T2oOtKADBAvGik/MEMAUSKxpc00XUl7PqIDhALwgsQA2JTAxIETtREyBYPArAhfItxw1ZBA4IDwQBswc1itrfMsFeHAJgB0/f3RPB2Ja2rFaQNfwhgGKfVWKmHyYvM+43WlQtuieAhgKZuV+O8yNDUrdf7vXTsbsO9xfYisCcnwDBO0LqC1tUm7C5RjkOkdbWqgQ3AME5o6nZ5qanbFQSPAqUlBIIbB/BXSM/X2xhjzPP1Nrzr2fO26Dl9w+dc77uglghwz7mXrlSQ97wOjvSBBUAyzp9RbXCIkFoRASTjNoQUBdqKZyGCDxdXDm3jJB5+ipbk4Okbj9T7XbvBF91DjYgvKi2cF1lwgzp1GHEQzMc0GZ9v2Lh15W5/OB0BB4Tote9GdQkAyd4N1M4B/7Xu0mu3ywgVqLMN44Ia4KI0WL0l6o8OlHqIff9fH6lfJWc5x4XgV+0AAAAASUVORK5CYII=) 0 0, auto;}
+        25%,49.9% {cursor:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABn0lEQVRYhe2XvZGDMBCFHzc04SauABeDhogCyHBsMgogYkQvJjdFmDL2gkOMWPTL2LrkNkMC7bdvVyuRFcWdsNo43jIkthwAqrrE9fsCAJQaItcfpGwAgIB0auR8YIUAEqnxZZuQsoFeH8kBUkE4AVJAHGrABoETNRGyxYMAdAjXYtyxVtCAJYBgALbgYTE9WubYaVEAzAGN4y2zRLszIdodpA4fBTDNy+65KO5U1aXzGyFaE9ymYBRA3w2756ou0XeDM3pfOrzb0LeYTwGfGQGmeYEQLYRoD7KbTOU4xIRodzVwAJjmBX03bC/13bCD4CqotIRAcOcAfgvp8XwREdHj+SLe9fR53dS4+obPmd43QW0K8Mh5lKZUqOh5HcT0gQ3A5pyPqdrgECG1YgWwOdchbCqorXgWIvhwMeVQd66My6/UsgV4+sZj6/2m3eBSN6oR8UVtC1d1GdygTh1GHATrMa2crzdsXGXj7Q+nFTBAWKMuiru/D7zD9N2g2jng7gtvvXabopRrGj5+xddbsxojIu9l9qMK/MW/5r9F2w9B5D73s1wXywAAAABJRU5ErkJggg==) 0 0, auto;}
+        50%,74.9% {cursor:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABiklEQVRYhe2WvZGDMBCFHzc0cU24gCsGDREFkNmxySiAiIFeTG6KMGXogrOY1aKVBMPoEr+MP+23b1eLsqK4a7w1jrcMiZUDQFWX+Ll8A4BODZHTi2G4AoAG0rmR8xtvCCCRG1/Sg2G4gvZHcoBUEF6AFBCbHpAgcKAnYrZ4FACF8C3GA5OGBoQEogHYgpvFaLYssFe7AFgAPY63TMjWklKNBUnhdwFM82JdF8VdV3Xp/UapxgW3OrgLoGt767qqS3Rt780+VI7gNgwtFnIgJCfANC9QqoFSzcZ2l0yNY6RUY/XABmCaF3Rtv77Utb0FwV0wZYmB4MEB/DXS4/nSWmv9eL40n3r0OZW5b77hz1zvu6BWB3jmPEtXKUz2vA/2zIEVQArO75ne4BAxvSICSMEphOSC2YpHIaJ/Lq4a0uBG3H7jlpTg4ROPNPtdu8Hn7q5BxBeVFq7qMnpAnXLmo26QEzaAcAlOE50LrpkQnANniO4GM85DOs2W0LkxaQlSHOdFiH8L/tFR/QI+LU8Q5maVtgAAAABJRU5ErkJggg==) 0 0, auto;}
+        75%,99.9% {cursor:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABnUlEQVRYhe2WsXGEMBBFPx6acBMu4IqRhogCyLgYMgogYqCXIz+KOMqQA7OMWLRCMGeNA/9MArRvv1aLEqUqg0XDcE8QWSkA5EWG29cnAJjYEKk96PsSAAwQz42UTywQQCQ3PqQHfV/Cro/oALEgvAAxIHY1IEHgQk2EHPEgABvCtxgPbBU0ICQQDMAW3C1mZ8sCe3UKgAUww3BPhGw30rreQNrwpwDGad6MlapMXmTeb7SuXXCrg6cA2qbbjPMiQ9t03uyPtuPwGB4tduTAkZwA4zRD6xpa1zvbXaI9DpHW9aYGdgDjNKNtuvWltuk2ENwF2pYQCB4cwE8hPZ4vY4wxj+fL8K5nP7dF8/QNf+Z63wW1OsAz51m6toKy53Vwpg+sAFJwPke1wSFCakUEkILbEJILdBSvQgT/XFx7aAcncfvJLSnByzceqfe7ToPP3VONiC8qLZwXWXCDuvQz4iBYftMUfLlh45aXh/3hsgMOiEtt+S0AJPs0UDsHAF8jeuu1WwpCRZokye9e86k185Ye43q/SqlKtPtff1Lfmlc+NTJJpsEAAAAASUVORK5CYII=) 0 0, auto;}
+      }
+      body {
+        animation: rwdcur251276 0.66666666666667s linear infinite forwards;
+      }
+    </style>
+
     <title>
       {{ page_title }}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
