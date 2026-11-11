@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "gallery": {
+      "type": "custom-home-gallery"
+    }
+  },
+  "order": ["gallery"]
+}

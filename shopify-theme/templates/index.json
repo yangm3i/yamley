@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "splash": {
+      "type": "custom-splash"
+    }
+  },
+  "order": ["splash"]
+}

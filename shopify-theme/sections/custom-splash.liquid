@@ -1,0 +1,64 @@
+<style>
+  #shopify-section-{{ section.id }} *,
+  #shopify-section-{{ section.id }} *::before,
+  #shopify-section-{{ section.id }} *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { width: 100%; height: 100%; overflow: hidden; }
+
+  #shopify-section-{{ section.id }} .landing {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 48px;
+  }
+
+  #shopify-section-{{ section.id }} .landing-bg {
+    position: absolute;
+    inset: 0;
+    background: url('{{ "korea--img_8126.jpeg" | asset_url }}') center center / cover no-repeat;
+  }
+
+  #shopify-section-{{ section.id }} .landing-label {
+    position: relative;
+    z-index: 1;
+    background: rgba(250, 249, 247, 0.72);
+    backdrop-filter: blur(2px);
+    padding: 28px 48px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  #shopify-section-{{ section.id }} .landing-label:hover {
+    background: rgba(250, 249, 247, 0.88);
+    transform: scale(1.02);
+  }
+
+  #shopify-section-{{ section.id }} .landing-label span {
+    font-family: 'Georgia', serif;
+    font-size: clamp(22px, 3.5vw, 48px);
+    font-weight: 400;
+    color: #1A1A1A;
+    letter-spacing: 0.02em;
+    display: block;
+  }
+</style>
+
+<div class="landing" onclick="window.location='{{ pages.home.url | default: '/pages/home' }}'">
+  <div class="landing-bg"></div>
+  <a class="landing-label" href="{{ pages.home.url | default: '/pages/home' }}">
+    <span>welcome! click to enter ₍^. ̫ .^₎⟆</span>
+  </a>
+</div>
+
+{% schema %}
+{
+  "name": "Custom splash",
+  "settings": []
+}
+{% endschema %}

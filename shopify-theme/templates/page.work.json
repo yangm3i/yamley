@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "work": {
+      "type": "custom-work"
+    }
+  },
+  "order": ["work"]
+}

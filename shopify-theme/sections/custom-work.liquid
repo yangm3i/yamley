@@ -1,0 +1,656 @@
+<style>
+  #shopify-section-{{ section.id }} *, #shopify-section-{{ section.id }} *::before, #shopify-section-{{ section.id }} *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #FAF9F7;
+    --ink:     #1A1A1A;
+    --rose:    #9FB8C3;
+    --sage:    #B5C4B1;
+    --sand:    #D4C5A9;
+    --blush:   #CDE3ED;
+    --soft-grey: #C4C4C4;
+    --sage-light: #DCE6D9;
+    --sage-dark: #A3B89D;
+    --font:    'Roboto Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  #shopify-section-{{ section.id }} {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  #shopify-section-{{ section.id }} nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #DDDDDD;
+    transition: border-color 0.3s;
+  }
+
+  #shopify-section-{{ section.id }} .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  #shopify-section-{{ section.id }} .nav-logo img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .nav-links {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+  }
+  #shopify-section-{{ section.id }} .nav-links a {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: var(--ink);
+    opacity: 0.85;
+    padding: 6px 16px;
+    background: #FFFFFF;
+    border-top: 1.5px solid #FFFFFF;
+    border-left: 1.5px solid #FFFFFF;
+    border-bottom: 1.5px solid var(--soft-grey);
+    border-right: 1.5px solid var(--soft-grey);
+    border-radius: 8px;
+    transition: opacity 0.15s, background 0.15s;
+  }
+  #shopify-section-{{ section.id }} .nav-links a:hover { opacity: 1; }
+  #shopify-section-{{ section.id }} .nav-links a.active {
+    opacity: 1;
+    background: var(--sage-light);
+    border-top: 1.5px solid var(--sage-dark);
+    border-left: 1.5px solid var(--sage-dark);
+    border-bottom: 1.5px solid #FFFFFF;
+    border-right: 1.5px solid #FFFFFF;
+  }
+
+  /* ── SECTION SHARED ── */
+  #shopify-section-{{ section.id }} section { padding: 96px 48px; }
+
+  /* ── WORK TABS ── */
+  #shopify-section-{{ section.id }} .work { max-width: 1200px; margin: 0 auto; }
+
+  #shopify-section-{{ section.id }} .tab-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+  #shopify-section-{{ section.id }} .tab-btn {
+    font-family: var(--font);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: lowercase;
+    cursor: pointer;
+    padding: 10px 20px;
+    color: #4A4A4A;
+    opacity: 0.85;
+    background: #FFFFFF;
+    border-top: 2px solid #FFFFFF;
+    border-left: 2px solid #FFFFFF;
+    border-bottom: 2px solid var(--soft-grey);
+    border-right: 2px solid var(--soft-grey);
+    border-radius: 8px;
+    transition: opacity 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  #shopify-section-{{ section.id }} .tab-btn.active {
+    opacity: 1;
+    color: var(--ink);
+    background: var(--sage-light);
+    border-top: 2px solid var(--sage-dark);
+    border-left: 2px solid var(--sage-dark);
+    border-bottom: 2px solid #FFFFFF;
+    border-right: 2px solid #FFFFFF;
+  }
+  #shopify-section-{{ section.id }} .tab-panel { display: none; }
+  #shopify-section-{{ section.id }} .tab-panel.active { display: block; }
+
+  /* ── LOCATION FILTERS ── */
+  #shopify-section-{{ section.id }} .location-filter-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0;
+    position: relative;
+    z-index: 1;
+  }
+  #shopify-section-{{ section.id }} .loc-btn {
+    font-family: var(--font);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    background: var(--cream);
+    border: 1.5px solid var(--soft-grey);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    padding: 7px 6px 8px;
+    color: var(--ink);
+    opacity: 0.65;
+    position: relative;
+    top: 1.5px;
+    flex: 1 1 0;
+    white-space: nowrap;
+    text-align: center;
+    transition: opacity 0.2s, background 0.2s, border-color 0.2s;
+  }
+  #shopify-section-{{ section.id }} .loc-btn + .loc-btn { margin-left: -1.5px; }
+  #shopify-section-{{ section.id }} .loc-btn:hover { opacity: 1; }
+  #shopify-section-{{ section.id }} .loc-btn.active {
+    opacity: 1;
+    background: var(--sage-light);
+    border-color: var(--sage-dark);
+    z-index: 1;
+  }
+  #shopify-section-{{ section.id }} .photo-frame-panel {
+    position: relative;
+    border: 1.5px solid var(--soft-grey);
+    border-radius: 10px;
+    padding: 28px 24px 24px;
+    margin-bottom: 40px;
+  }
+  #shopify-section-{{ section.id }} .photo-frame-panel--plain {
+    border-radius: 10px;
+  }
+  #shopify-section-{{ section.id }} .grid-item[data-location] { transition: opacity 0.25s; }
+  #shopify-section-{{ section.id }} .grid-item.hidden { display: none; }
+
+  /* ── CERAMICS CAROUSEL ── */
+  #shopify-section-{{ section.id }} .carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  #shopify-section-{{ section.id }} .carousel-track {
+    display: flex;
+    transition: transform 0.35s ease;
+  }
+  #shopify-section-{{ section.id }} .carousel-track img {
+    width: 100%;
+    aspect-ratio: 2421 / 2996;
+    flex-shrink: 0;
+    object-fit: cover;
+    display: block;
+  }
+  #shopify-section-{{ section.id }} .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(250,249,247,0.85);
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    color: var(--ink);
+  }
+  #shopify-section-{{ section.id }} .carousel:hover .carousel-btn { opacity: 1; }
+  #shopify-section-{{ section.id }} .carousel-btn.prev { left: 10px; }
+  #shopify-section-{{ section.id }} .carousel-btn.next { right: 10px; }
+  #shopify-section-{{ section.id }} .carousel-btn:disabled { opacity: 0 !important; cursor: default; }
+  #shopify-section-{{ section.id }} .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 8px;
+  }
+  #shopify-section-{{ section.id }} .carousel-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--sand);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s;
+  }
+  #shopify-section-{{ section.id }} .carousel-dot.active { background: var(--ink); }
+  #shopify-section-{{ section.id }} .carousel-dots--spacer { visibility: hidden; pointer-events: none; }
+
+  /* masonry-ish grid */
+  #shopify-section-{{ section.id }} .grid {
+    columns: 3;
+    column-gap: 20px;
+  }
+  @media (max-width: 900px) { #shopify-section-{{ section.id }} .grid { columns: 2; } }
+  @media (max-width: 560px) { #shopify-section-{{ section.id }} .grid { columns: 1; } }
+
+  #shopify-section-{{ section.id }} #ceramics-grid-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 600px) { #shopify-section-{{ section.id }} #ceramics-grid-{{ section.id }} { grid-template-columns: 1fr; } }
+
+  #shopify-section-{{ section.id }} .grid-item {
+    break-inside: avoid;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+  #shopify-section-{{ section.id }} .grid-item .swatch {
+    width: 100%;
+    display: block;
+    border-radius: 2px;
+  }
+  #shopify-section-{{ section.id }} .grid-item .caption {
+    padding: 10px 0 4px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    opacity: 0.45;
+    text-transform: lowercase;
+  }
+
+  #shopify-section-{{ section.id }} .photo-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  #shopify-section-{{ section.id }} .photo-frame .swatch {
+    width: 100%;
+    display: block;
+    border-radius: 2px;
+  }
+  #shopify-section-{{ section.id }} .photo-desc {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 18px;
+    background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0.05) 60%);
+    color: #fff;
+    font-size: 11px;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  #shopify-section-{{ section.id }} .photo-frame:hover .photo-desc {
+    opacity: 1;
+  }
+
+  #shopify-section-{{ section.id }} .ph {
+    width: 100%;
+    display: block;
+    border-radius: 2px;
+  }
+
+  /* ── FOOTER ── */
+  #shopify-section-{{ section.id }} footer {
+    background: #FFFFFF;
+    color: var(--ink);
+    border-top: 1px solid #DDDDDD;
+    text-align: center;
+    padding: 24px 48px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    opacity: 0.4;
+  }
+
+  /* ── REVEAL ANIMATION ── */
+  #shopify-section-{{ section.id }} .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  #shopify-section-{{ section.id }} .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes workScrollFadeCentered {
+    0%, 100% { opacity: 0.2; transform: translateY(0); }
+    50%       { opacity: 0.45; transform: translateY(4px); }
+  }
+
+  #shopify-section-{{ section.id }} .page-header { padding: 140px 48px 24px; }
+  @font-palette-values --peachy-ink {
+    font-family: 'Bitcount Single Ink';
+    override-colors:
+      0 #4A4A4A, 1 #4A4A4A, 2 #4A4A4A, 3 #4A4A4A,
+      4 #4A4A4A, 5 #4A4A4A, 6 #4A4A4A, 7 #4A4A4A,
+      8 #4A4A4A, 9 #4A4A4A, 10 #4A4A4A, 11 #4A4A4A,
+      12 #4A4A4A, 13 #4A4A4A, 14 #4A4A4A, 15 #4A4A4A;
+  }
+  #shopify-section-{{ section.id }} .work-title {
+    font-family: 'Bitcount Single Ink', sans-serif;
+    font-palette: --peachy-ink;
+    font-size: clamp(20px, 3.5vw, 42px);
+    font-weight: 200;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  @media (max-width: 600px) {
+    #shopify-section-{{ section.id }} nav { padding: 16px 20px; }
+    #shopify-section-{{ section.id }} .nav-links { gap: 20px; }
+    #shopify-section-{{ section.id }} section { padding: 64px 20px; }
+    #shopify-section-{{ section.id }} .page-header { padding: 100px 20px 16px; }
+    #shopify-section-{{ section.id }} .tab-row { gap: 0; flex-wrap: wrap; }
+    #shopify-section-{{ section.id }} .tab-btn { font-size: 10px; padding: 8px 14px; }
+    #shopify-section-{{ section.id }} .grid { columns: 1 !important; }
+  }
+</style>
+
+<div id="shopify-section-{{ section.id }}">
+
+<nav id="nav-{{ section.id }}">
+  <a class="nav-logo" href="{{ pages.home.url | default: '/pages/home' }}">
+    <img src="{{ 'icons--yam-clover---cropped.png' | asset_url }}" style="opacity:1;" alt="yam logo" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="{{ pages.home.url | default: '/pages/home' }}">Home</a></li>
+    <li><a href="{{ pages.work.url | default: '/pages/work' }}" class="active">Work</a></li>
+    <li><a href="{{ pages.about.url | default: '/pages/about' }}">About</a></li>
+  </ul>
+</nav>
+
+<section id="work-{{ section.id }}" style="padding-top:140px;">
+  <div class="work reveal">
+    <h1 class="work-title" style="margin-bottom:8px; display:flex; align-items:center; gap:2px; flex-wrap:wrap;">
+      <img src="{{ 'icons--untitled_artwork-4.png' | asset_url }}" width="864" height="231" alt="digital art gallery" style="height:110px; width:auto; max-width:100%; display:block;">
+      <img src="{{ 'icons--untitled_artwork-1.png' | asset_url }}" width="258" height="251" alt="hand-drawn star with swirl doodle" style="height:110px; width:auto; display:block;">
+    </h1>
+    <div class="tab-row">
+      <button class="tab-btn active" data-tab="photography">Photography</button>
+      <button class="tab-btn" data-tab="ceramics">Ceramics</button>
+      <button class="tab-btn" data-tab="visual-art">Visual Art</button>
+    </div>
+
+    <!-- Photography grid -->
+    <div class="tab-panel active" id="tab-photography-{{ section.id }}">
+      <div class="location-filter-row">
+        <button class="loc-btn active" data-loc="singapore">singapore</button>
+        <button class="loc-btn" data-loc="korea">korea</button>
+        <button class="loc-btn" data-loc="malaysia">malaysia</button>
+        <button class="loc-btn" data-loc="thailand">thailand</button>
+        <button class="loc-btn" data-loc="japan">japan</button>
+        <button class="loc-btn" data-loc="italy">italy</button>
+        <button class="loc-btn" data-loc="new-york">new york</button>
+        <button class="loc-btn" data-loc="san-francisco">san francisco</button>
+        <button class="loc-btn" data-loc="vancouver">vancouver</button>
+        <button class="loc-btn" data-loc="toronto">toronto</button>
+      </div>
+      <div class="photo-frame-panel">
+        <div class="grid" id="photo-grid-{{ section.id }}" style="columns:2;"></div>
+      </div>
+    </div>
+
+    <!-- Ceramics grid -->
+    <div class="tab-panel" id="tab-ceramics-{{ section.id }}">
+      <div class="photo-frame-panel photo-frame-panel--plain">
+        <div class="grid" id="ceramics-grid-{{ section.id }}"></div>
+      </div>
+    </div>
+
+    <!-- Visual Art grid -->
+    <div class="tab-panel" id="tab-visual-art-{{ section.id }}">
+      <div class="photo-frame-panel photo-frame-panel--plain">
+        <div class="grid">
+          <div class="grid-item">
+            <div class="ph" style="height:300px;background:linear-gradient(160deg,#E8C4B8,#B5C4B1);"></div>
+            <p class="caption">untitled — gouache on paper</p>
+          </div>
+          <div class="grid-item">
+            <div class="ph" style="height:260px;background:linear-gradient(160deg,#D4C5A9,#E8C4B8);"></div>
+            <p class="caption">soft study no. 1</p>
+          </div>
+          <div class="grid-item">
+            <div class="ph" style="height:320px;background:linear-gradient(160deg,#B5C4B1,#D4C5A9);"></div>
+            <p class="caption">colour field sketch</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="scroll-hint" style="position:static; left:auto; transform:none; display:flex; justify-content:center; width:100%; margin:0 auto 48px; animation:workScrollFadeCentered 3s ease-in-out infinite;">
+  <pre>⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⣤⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⠋⠀⠀⠙⢿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣸⡇⠀⠀⠀⠀⠀⠙⢿⣦⡀⠀⠀⢀⣀⣀⣠⣤⣀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣿⠇⠀⠀⠀⠀⠀⠀⠀⠙⠿⠿⠟⠛⠛⠋⠉⠉⠛⣷⡄⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢠⣿⢀⣀⡤⣤⢤⡤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀
+⠀⠀⠀⠀⣀⣤⣶⠿⠛⠋⠁⠁⠀⠀⠀⠉⠛⣯⣳⡀⠀⠀⠀⠀⠀⠀⢠⡿⠃⠀⠀
+⠀⣠⣶⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡻⣿⠀⠀⠀⠀⠀⣠⡿⠃⠀⠀⠀
+⢸⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⡴⠋⠉⢹⡆⠀⠀⢸⣿⠀⠀⠀⠀⢠⡿⠁⠀⠀⠀⠀
+⢸⣧⡀⠀⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⠈⠀⠀⢀⣮⠏⠀⠀⠀⠀⠘⣷⡀⠀⠀⠀⠀
+⠀⠙⠿⣶⣤⣀⠀⠀⠀⠀⠈⠻⢦⣤⣤⣤⡶⠟⠁⠀⠀⠀⠀⠀⠀⠘⣷⣄⠀⠀⠀
+⠀⠀⠀⠀⠉⠛⠿⣶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⡄
+⠀⠀⠀⠀⠀⠀⠀⠘⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡿
+⠀⠀⠀⠀⠀⠀⠀⠀⣿⡆⠀⠀⠀⠀⠀⠀⠀⣠⣶⣶⣦⣤⣤⣄⣀⣀⣤⡶⠛⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢹⡇⠀⠀⠀⠀⠀⣠⣾⠏⠀⠀⠀⠈⠉⠉⠙⠛⠉⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣄⠀⠀⣠⣾⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠛⠛⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</pre>
+</div>
+
+<footer>
+  <img src="{{ 'logo-ink.png' | asset_url }}" alt="yam logo" style="height:14px; width:auto; vertical-align:middle; margin-right:6px; opacity:0.75;" />yamley &nbsp;·&nbsp; digital media scrapbook
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('shopify-section-{{ section.id }}');
+
+  // ── PHOTO DATA ──────────────────────────────────────────────
+  var photos = [
+    {
+      src: "{{ 'singapore--img_6297.jpg' | asset_url }}",
+      location: "singapore",
+      caption: "singapore, feb 2026",
+      desc: "A rainy day in Holland Road. Singapore's urban landscape is intertwined with the tropical geography, giving the whole city a green utopian effect. The flowers that overhang over the side of the bridge are a beautiful sight for local passersby."
+    },
+    {
+      src: "{{ 'singapore--img_6288.jpeg' | asset_url }}",
+      location: "singapore",
+      caption: "singapore, feb 2026",
+      desc: "A little cat spotted outside the National Museum of Singapore, sitting unbothered on the lawn. A quiet, unexpected moment of stillness in the middle of a busy afternoon."
+    },
+    { src: "{{ 'italy--img_5055.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5056.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5057.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5059.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5061.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5062.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5063.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5068.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5069.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5072.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5074.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5077.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" },
+    { src: "{{ 'italy--img_5083.jpeg' | asset_url }}", location: "italy", caption: "italy", desc: "" }
+  ];
+  // ────────────────────────────────────────────────────────────
+
+  function renderPhotos(loc) {
+    var grid = root.querySelector('#photo-grid-{{ section.id }}');
+    grid.innerHTML = photos
+      .filter(function (p) { return p.location === loc; })
+      .map(function (p) {
+        return '<div class="grid-item" data-location="' + p.location + '">' +
+          '<div class="photo-frame">' +
+          '<img class="swatch" src="' + p.src + '" alt="' + p.caption + '" />' +
+          '<div class="photo-desc">' + p.desc + '</div>' +
+          '</div></div>';
+      })
+      .join('');
+  }
+
+  renderPhotos('singapore');
+
+  var nav = document.getElementById('nav-{{ section.id }}');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  root.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      root.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      root.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab + '-{{ section.id }}').classList.add('active');
+    });
+  });
+
+  root.querySelectorAll('.loc-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      root.querySelectorAll('.loc-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      renderPhotos(btn.dataset.loc);
+    });
+  });
+
+  // ── CERAMICS DATA ───────────────────────────────────────────
+  var ceramics = [
+    {
+      caption: "yamley ceramics - maker's mark on clay",
+      desc: "",
+      images: ["{{ 'ceramics--img_9079.jpeg' | asset_url }}"]
+    },
+    {
+      caption: "rice bowl - ocean wave glaze",
+      desc: "",
+      images: [
+        "{{ 'ceramics--img_0698.jpeg' | asset_url }}",
+        "{{ 'ceramics--img_0695.jpeg' | asset_url }}",
+        "{{ 'ceramics--img_0697.jpeg' | asset_url }}",
+        "{{ 'ceramics--img_0713.jpeg' | asset_url }}"
+      ]
+    },
+    {
+      caption: "snoopy trinket dish",
+      desc: "",
+      images: [
+        "{{ 'ceramics--img_5882.jpeg' | asset_url }}",
+        "{{ 'ceramics--snoopy-dish.png' | asset_url }}"
+      ]
+    },
+    {
+      caption: "hand painted bunny teapot",
+      desc: "",
+      images: [
+        "{{ 'ceramics--img_7050.jpeg' | asset_url }}",
+        "{{ 'ceramics--img_7049.jpeg' | asset_url }}",
+        "{{ 'ceramics--img_7056.jpeg' | asset_url }}",
+        "{{ 'ceramics--img_7062.jpeg' | asset_url }}",
+        "{{ 'ceramics--img_7058.jpeg' | asset_url }}"
+      ]
+    },
+    {
+      caption: "hand painted flower bowl",
+      desc: "",
+      images: [
+        "{{ 'ceramics--scrl_0002.jpg' | asset_url }}",
+        "{{ 'ceramics--img_0091.jpeg' | asset_url }}"
+      ]
+    },
+    {
+      caption: "small bubble trinket dish - ocean pebble",
+      desc: "",
+      images: [
+        "{{ 'ceramics--img_0074.jpeg' | asset_url }}",
+        "{{ 'ceramics--img_0094.jpeg' | asset_url }}",
+        "{{ 'ceramics--img_0095.jpeg' | asset_url }}"
+      ]
+    }
+  ];
+  // ────────────────────────────────────────────────────────────
+
+  function renderCeramics() {
+    var grid = root.querySelector('#ceramics-grid-{{ section.id }}');
+    grid.innerHTML = ceramics.map(function (piece, pi) {
+      var imgs = piece.images.map(function (src) {
+        return '<img src="' + src + '" alt="' + piece.caption + '" />';
+      }).join('');
+      var dots = '<div class="carousel-dots' + (piece.images.length > 1 ? '' : ' carousel-dots--spacer') + '">' +
+        piece.images.map(function (_, i) {
+          return '<button class="carousel-dot' + (i === 0 ? ' active' : '') + '" data-piece="' + pi + '" data-i="' + i + '"></button>';
+        }).join('') + '</div>';
+      var btns = piece.images.length > 1
+        ? '<button class="carousel-btn prev" data-piece="' + pi + '">&#8592;</button>' +
+          '<button class="carousel-btn next" data-piece="' + pi + '">&#8594;</button>'
+        : '';
+      return '<div class="grid-item">' +
+        '<div class="carousel" id="carousel-{{ section.id }}-' + pi + '">' +
+        '<div class="carousel-track">' + imgs + '</div>' +
+        btns +
+        '</div>' +
+        dots +
+        '<p class="caption">' + piece.caption + '</p>' +
+        (piece.desc ? '<div class="photo-desc">' + piece.desc + '</div>' : '') +
+        '</div>';
+    }).join('');
+
+    var state = ceramics.map(function () { return { idx: 0 }; });
+
+    function goTo(pi, idx) {
+      var track = root.querySelector('#carousel-{{ section.id }}-' + pi + ' .carousel-track');
+      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      state[pi].idx = idx;
+      root.querySelectorAll('.carousel-dot[data-piece="' + pi + '"]').forEach(function (d) {
+        d.classList.toggle('active', +d.dataset.i === idx);
+      });
+    }
+
+    root.querySelectorAll('.carousel-btn.prev').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var pi = +btn.dataset.piece;
+        goTo(pi, Math.max(0, state[pi].idx - 1));
+      });
+    });
+    root.querySelectorAll('.carousel-btn.next').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var pi = +btn.dataset.piece;
+        goTo(pi, Math.min(ceramics[pi].images.length - 1, state[pi].idx + 1));
+      });
+    });
+    root.querySelectorAll('.carousel-dot').forEach(function (dot) {
+      dot.addEventListener('click', function () { goTo(+dot.dataset.piece, +dot.dataset.i); });
+    });
+  }
+
+  renderCeramics();
+
+  var observer = new IntersectionObserver(
+    function (entries) { entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible'); }); },
+    { threshold: 0.12 }
+  );
+  root.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Custom work",
+  "settings": []
+}
+{% endschema %}
