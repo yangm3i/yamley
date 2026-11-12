@@ -1,0 +1,303 @@
+<style>
+  #shopify-section-{{ section.id }} *, #shopify-section-{{ section.id }} *::before, #shopify-section-{{ section.id }} *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #FAF9F7;
+    --ink:     #1A1A1A;
+    --rose:    #9FB8C3;
+    --sage:    #B5C4B1;
+    --sand:    #D4C5A9;
+    --blush:   #CDE3ED;
+    --soft-grey: #C4C4C4;
+    --sage-light: #DCE6D9;
+    --sage-dark: #A3B89D;
+    --font:    'Roboto Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  #shopify-section-{{ section.id }} {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  #shopify-section-{{ section.id }} nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #DDDDDD;
+    transition: border-color 0.3s;
+  }
+
+  #shopify-section-{{ section.id }} .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  #shopify-section-{{ section.id }} .nav-logo img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .nav-links {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+  }
+  #shopify-section-{{ section.id }} .nav-links a {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: var(--ink);
+    opacity: 0.85;
+    padding: 6px 16px;
+    background: #FFFFFF;
+    border-top: 1.5px solid #FFFFFF;
+    border-left: 1.5px solid #FFFFFF;
+    border-bottom: 1.5px solid var(--soft-grey);
+    border-right: 1.5px solid var(--soft-grey);
+    border-radius: 0;
+    transition: opacity 0.15s, background 0.15s;
+  }
+  #shopify-section-{{ section.id }} .nav-links a:hover { opacity: 1; }
+  #shopify-section-{{ section.id }} .nav-links a.active {
+    opacity: 1;
+    background: var(--sage-light);
+    border-top: 1.5px solid var(--sage-dark);
+    border-left: 1.5px solid var(--sage-dark);
+    border-bottom: 1.5px solid #FFFFFF;
+    border-right: 1.5px solid #FFFFFF;
+  }
+
+  /* ── SECTION SHARED ── */
+  #shopify-section-{{ section.id }} section { padding: 96px 48px; }
+
+  #shopify-section-{{ section.id }} .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    margin-bottom: 12px;
+  }
+
+  /* ── SHOP ── */
+  #shopify-section-{{ section.id }} .shop-page-wrap { padding-top: 80px; }
+
+  #shopify-section-{{ section.id }} .shop-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  #shopify-section-{{ section.id }} .shop-panel {
+    border: 1.5px solid #33586A;
+    border-radius: 10px;
+    background: #FFFFFF;
+    box-shadow: 4px 4px 0 #9C9C9C;
+    padding: 28px 24px 24px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  #shopify-section-{{ section.id }} .shop-searchbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 320px;
+    max-width: 100%;
+    margin: 0 auto 28px;
+    padding: 16px 26px;
+    background: #EFEFEF;
+    border: 1px solid var(--soft-grey);
+    border-radius: 999px;
+    color: #777777;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    text-transform: lowercase;
+  }
+  #shopify-section-{{ section.id }} .shop-searchbar svg { flex-shrink: 0; opacity: 0.7; width: 18px; height: 18px; }
+
+  #shopify-section-{{ section.id }} .shop-empty {
+    text-align: center;
+    padding: 40px 12px 24px;
+  }
+  #shopify-section-{{ section.id }} .shop-empty h2 {
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 200;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  #shopify-section-{{ section.id }} .shop-empty p {
+    font-size: 14px;
+    line-height: 1.9;
+    opacity: 0.65;
+  }
+
+  #shopify-section-{{ section.id }} .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) {
+    #shopify-section-{{ section.id }} .shop-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    #shopify-section-{{ section.id }} .shop-grid { grid-template-columns: 1fr; }
+  }
+
+  #shopify-section-{{ section.id }} .shop-card {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  #shopify-section-{{ section.id }} .shop-card-frame {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--sage-light);
+    margin-bottom: 10px;
+  }
+  #shopify-section-{{ section.id }} .shop-card-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  #shopify-section-{{ section.id }} .shop-card:hover .shop-card-frame img {
+    transform: scale(1.04);
+  }
+  #shopify-section-{{ section.id }} .shop-card-title {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    opacity: 0.85;
+    margin-bottom: 4px;
+  }
+  #shopify-section-{{ section.id }} .shop-card-price {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    opacity: 0.5;
+  }
+
+  /* ── FOOTER ── */
+  #shopify-section-{{ section.id }} footer {
+    background: #FFFFFF;
+    color: var(--ink);
+    border-top: 1px solid #DDDDDD;
+    text-align: center;
+    padding: 24px 48px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    opacity: 0.4;
+  }
+
+  /* ── REVEAL ANIMATION ── */
+  #shopify-section-{{ section.id }} .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  #shopify-section-{{ section.id }} .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    #shopify-section-{{ section.id }} nav { padding: 16px 20px; }
+    #shopify-section-{{ section.id }} .nav-links { gap: 20px; }
+    #shopify-section-{{ section.id }} section { padding: 64px 20px; }
+  }
+</style>
+
+<div id="shopify-section-{{ section.id }}">
+
+<nav id="nav-{{ section.id }}">
+  <a class="nav-logo" href="{{ pages.home.url | default: '/pages/home' }}">
+    <img src="{{ 'icons--yam-flower---cropped.png' | asset_url }}" style="opacity:1;" alt="yam logo" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="{{ pages.home.url | default: '/pages/home' }}">Home</a></li>
+    <li><a href="/collections/all" class="active">Shop</a></li>
+    <li><a href="{{ pages.work.url | default: '/pages/work' }}">Work</a></li>
+    <li><a href="{{ pages.about.url | default: '/pages/about' }}">About</a></li>
+  </ul>
+</nav>
+
+<div class="shop-page-wrap">
+  <section id="shop-{{ section.id }}">
+    <div class="shop-inner reveal">
+      <div class="shop-panel">
+        <div class="shop-searchbar">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          shop
+        </div>
+
+        {% if collection.products.size > 0 %}
+          <div class="shop-grid">
+            {% for product in collection.products %}
+              <a class="shop-card" href="{{ product.url }}">
+                <div class="shop-card-frame">
+                  {% if product.featured_image %}
+                    <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | default: product.title }}" loading="lazy" width="600" height="600">
+                  {% endif %}
+                </div>
+                <div class="shop-card-title">{{ product.title | downcase }}</div>
+                <div class="shop-card-price">{{ product.price | money }}</div>
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="shop-empty">
+            <h2>products coming soon</h2>
+            <p>check back soon for ceramics, prints, and other handmade things.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <img src="{{ 'logo-ink.png' | asset_url }}" alt="yam logo" style="height:14px; width:auto; vertical-align:middle; margin-right:6px; opacity:0.75;" />yamley &nbsp;·&nbsp; digital media scrapbook
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var nav = document.getElementById('nav-{{ section.id }}');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  var observer = new IntersectionObserver(
+    function (entries) { entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible'); }); },
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('#shopify-section-{{ section.id }} .reveal').forEach(function (el) { observer.observe(el); });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Custom shop",
+  "settings": []
+}
+{% endschema %}
