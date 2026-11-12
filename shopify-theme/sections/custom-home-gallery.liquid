@@ -283,6 +283,57 @@
     opacity: 1;
   }
 
+  /* ── BOOK FLIP ── */
+  #shopify-section-{{ section.id }} .book-flip-frame {
+    position: relative;
+    perspective: 2400px;
+  }
+  #shopify-section-{{ section.id }} .book-flip-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform-origin: left center;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    transition: transform 0.35s ease-in;
+  }
+  #shopify-section-{{ section.id }} .book-flip-shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: 4px;
+    pointer-events: none;
+    background: linear-gradient(to right, rgba(20,16,12,0.45) 0%, rgba(20,16,12,0.08) 55%, rgba(20,16,12,0) 80%);
+    opacity: 0;
+    transition: opacity 0.35s ease-in-out;
+  }
+  #shopify-section-{{ section.id }} .book-flip-shadow.active {
+    opacity: 1;
+  }
+  #shopify-section-{{ section.id }} .book-flip-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  #shopify-section-{{ section.id }} .book-flip-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 0;
+    background: #FFFFFF;
+    border: 1.5px solid var(--soft-grey);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  #shopify-section-{{ section.id }} .book-flip-dot.active {
+    background: var(--sage-dark);
+    border-color: var(--sage-dark);
+  }
+
   /* ── NEWSLETTER ── */
   #shopify-section-{{ section.id }} .newsletter-box {
     max-width: 480px;
@@ -419,8 +470,24 @@
     <p id="hero-message-box-{{ section.id }}" style="font-size:clamp(11px,1.6vw,17px); font-weight:700; color:#555555; letter-spacing:0.01em; opacity:1; text-transform:none; background:transparent; border:none; padding:10px 18px; margin:0; box-sizing:border-box; text-align:center;">welcome to my digital media gallery! ⋆⭒˚｡⋆</p>
   </div>
   <div style="max-width:820px; margin:0 auto 12px;">
-    <img src="{{ 'photo-book-cover-spread.jpg' | asset_url }}" width="1800" height="1164" alt="Photo book front and back cover mockup — visual memory archive, film photo collection" style="width:100%; height:auto; display:block; border-radius:4px;" />
+    <div class="book-flip-frame">
+      <img
+        id="book-flip-img-{{ section.id }}"
+        class="book-flip-img"
+        src="{{ 'photo-book-cover-spread.jpg' | asset_url }}"
+        width="1800"
+        height="1164"
+        alt="Photo book front and back cover mockup — visual memory archive, film photo collection"
+      />
+      <div class="book-flip-shadow" id="book-flip-shadow-{{ section.id }}"></div>
+    </div>
     <p style="margin-top:14px; font-size:12px; letter-spacing:0.1em; text-transform:lowercase; text-align:center; opacity:0.55;">film photo collection &mdash; coming soon</p>
+    <p style="margin-top:4px; font-size:11px; letter-spacing:0.08em; text-transform:lowercase; text-align:center; opacity:0.4;">(click the book to flip through a few pages)</p>
+    <div class="book-flip-dots" id="book-flip-dots-{{ section.id }}">
+      <button class="book-flip-dot active" data-index="0" aria-label="Cover"></button>
+      <button class="book-flip-dot" data-index="1" aria-label="Page 5"></button>
+      <button class="book-flip-dot" data-index="2" aria-label="Page 6"></button>
+    </div>
   </div>
   <div class="newsletter-box">
     {% form 'customer', class: 'newsletter-form' %}
@@ -505,6 +572,52 @@
   window.addEventListener('load', syncMessageBoxWidth);
   if (heroPhoto && heroPhoto.complete) syncMessageBoxWidth();
   else if (heroPhoto) heroPhoto.addEventListener('load', syncMessageBoxWidth);
+
+  // Book flip
+  var bookPages = [
+    { src: '{{ "photo-book-cover-spread.jpg" | asset_url }}', alt: 'Photo book front and back cover mockup — visual memory archive, film photo collection' },
+    { src: '{{ "photo-book-pages-4-5.jpg" | asset_url }}', alt: 'Photo book pages 4 and 5 — film photo collection, winter lake photo' },
+    { src: '{{ "photo-book-pages-6-7.jpg" | asset_url }}', alt: 'Photo book pages 6 and 7 — moments in my head, Japan street photo with cat drawing' }
+  ];
+  var bookImg = document.getElementById('book-flip-img-{{ section.id }}');
+  var bookShadow = document.getElementById('book-flip-shadow-{{ section.id }}');
+  var bookDots = document.querySelectorAll('#book-flip-dots-{{ section.id }} .book-flip-dot');
+  var bookIndex = 0;
+  var bookFlipping = false;
+  var FLIP_MS = 350;
+
+  function goToBookPage(nextIndex) {
+    if (bookFlipping || nextIndex === bookIndex || !bookImg) return;
+    bookFlipping = true;
+    if (bookShadow) bookShadow.classList.add('active');
+    bookImg.style.transition = 'transform ' + FLIP_MS + 'ms ease-in';
+    bookImg.style.transform = 'rotateY(-90deg)';
+    setTimeout(function () {
+      bookIndex = nextIndex;
+      bookImg.src = bookPages[bookIndex].src;
+      bookImg.alt = bookPages[bookIndex].alt;
+      bookDots.forEach(function (d, i) { d.classList.toggle('active', i === bookIndex); });
+      bookImg.style.transition = 'none';
+      bookImg.style.transform = 'rotateY(90deg)';
+      // force reflow so the next transition actually animates
+      void bookImg.offsetWidth;
+      bookImg.style.transition = 'transform ' + FLIP_MS + 'ms ease-out';
+      bookImg.style.transform = 'rotateY(0deg)';
+      if (bookShadow) bookShadow.classList.remove('active');
+      bookFlipping = false;
+    }, FLIP_MS);
+  }
+
+  if (bookImg) {
+    bookImg.addEventListener('click', function () {
+      goToBookPage((bookIndex + 1) % bookPages.length);
+    });
+  }
+  bookDots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      goToBookPage(parseInt(dot.dataset.index, 10));
+    });
+  });
 })();
 </script>
 
