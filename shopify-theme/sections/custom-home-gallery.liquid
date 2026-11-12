@@ -286,7 +286,8 @@
   /* ── BOOK FLIP ── */
   #shopify-section-{{ section.id }} .book-flip-frame {
     position: relative;
-    perspective: 2400px;
+    overflow: hidden;
+    border-radius: 4px;
   }
   #shopify-section-{{ section.id }} .book-flip-img {
     width: 100%;
@@ -295,23 +296,7 @@
     border-radius: 4px;
     cursor: pointer;
     user-select: none;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    transform-origin: left center;
-    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
-    transition: transform 0.35s ease-in;
-  }
-  #shopify-section-{{ section.id }} .book-flip-shadow {
-    position: absolute;
-    inset: 0;
-    border-radius: 4px;
-    pointer-events: none;
-    background: linear-gradient(to right, rgba(20,16,12,0.45) 0%, rgba(20,16,12,0.08) 55%, rgba(20,16,12,0) 80%);
-    opacity: 0;
-    transition: opacity 0.35s ease-in-out;
-  }
-  #shopify-section-{{ section.id }} .book-flip-shadow.active {
-    opacity: 1;
+    transition: transform 0.35s ease-in-out;
   }
   #shopify-section-{{ section.id }} .book-flip-dots {
     display: flex;
@@ -479,7 +464,6 @@
         height="1164"
         alt="Photo book front and back cover mockup — visual memory archive, film photo collection"
       />
-      <div class="book-flip-shadow" id="book-flip-shadow-{{ section.id }}"></div>
     </div>
     <p style="margin-top:14px; font-size:12px; letter-spacing:0.1em; text-transform:lowercase; text-align:center; opacity:0.55;">film photo collection &mdash; coming soon</p>
     <p style="margin-top:4px; font-size:11px; letter-spacing:0.08em; text-transform:lowercase; text-align:center; opacity:0.4;">(click the book to flip through a few pages)</p>
@@ -573,39 +557,37 @@
   if (heroPhoto && heroPhoto.complete) syncMessageBoxWidth();
   else if (heroPhoto) heroPhoto.addEventListener('load', syncMessageBoxWidth);
 
-  // Book flip
+  // Book slide
   var bookPages = [
     { src: '{{ "photo-book-cover-spread.jpg" | asset_url }}', alt: 'Photo book front and back cover mockup — visual memory archive, film photo collection' },
     { src: '{{ "photo-book-pages-4-5.jpg" | asset_url }}', alt: 'Photo book pages 4 and 5 — film photo collection, winter lake photo' },
     { src: '{{ "photo-book-pages-6-7.jpg" | asset_url }}', alt: 'Photo book pages 6 and 7 — moments in my head, Japan street photo with cat drawing' }
   ];
   var bookImg = document.getElementById('book-flip-img-{{ section.id }}');
-  var bookShadow = document.getElementById('book-flip-shadow-{{ section.id }}');
   var bookDots = document.querySelectorAll('#book-flip-dots-{{ section.id }} .book-flip-dot');
   var bookIndex = 0;
   var bookFlipping = false;
-  var FLIP_MS = 350;
+  var SLIDE_MS = 350;
 
   function goToBookPage(nextIndex) {
     if (bookFlipping || nextIndex === bookIndex || !bookImg) return;
     bookFlipping = true;
-    if (bookShadow) bookShadow.classList.add('active');
-    bookImg.style.transition = 'transform ' + FLIP_MS + 'ms ease-in';
-    bookImg.style.transform = 'rotateY(-90deg)';
+    var forward = nextIndex > bookIndex;
+    bookImg.style.transition = 'transform ' + SLIDE_MS + 'ms ease-in';
+    bookImg.style.transform = 'translateX(' + (forward ? '-100%' : '100%') + ')';
     setTimeout(function () {
       bookIndex = nextIndex;
       bookImg.src = bookPages[bookIndex].src;
       bookImg.alt = bookPages[bookIndex].alt;
       bookDots.forEach(function (d, i) { d.classList.toggle('active', i === bookIndex); });
       bookImg.style.transition = 'none';
-      bookImg.style.transform = 'rotateY(90deg)';
+      bookImg.style.transform = 'translateX(' + (forward ? '100%' : '-100%') + ')';
       // force reflow so the next transition actually animates
       void bookImg.offsetWidth;
-      bookImg.style.transition = 'transform ' + FLIP_MS + 'ms ease-out';
-      bookImg.style.transform = 'rotateY(0deg)';
-      if (bookShadow) bookShadow.classList.remove('active');
+      bookImg.style.transition = 'transform ' + SLIDE_MS + 'ms ease-out';
+      bookImg.style.transform = 'translateX(0)';
       bookFlipping = false;
-    }, FLIP_MS);
+    }, SLIDE_MS);
   }
 
   if (bookImg) {
