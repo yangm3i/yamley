@@ -321,6 +321,9 @@
   #shopify-section-{{ section.id }} .carousel:hover .carousel-btn { opacity: 1; }
   #shopify-section-{{ section.id }} .carousel-btn.prev { left: 10px; }
   #shopify-section-{{ section.id }} .carousel-btn.next { right: 10px; }
+  @media (hover: none) {
+    #shopify-section-{{ section.id }} .carousel-btn { opacity: 0.85; }
+  }
   #shopify-section-{{ section.id }} .carousel-dots {
     display: flex;
     justify-content: center;

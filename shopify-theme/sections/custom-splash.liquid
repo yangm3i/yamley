@@ -33,6 +33,7 @@
     text-decoration: none;
     display: inline-block;
     transition: background 0.3s, transform 0.2s;
+    max-width: 90vw;
   }
 
   #shopify-section-{{ section.id }} .landing-label:hover {
@@ -42,11 +43,24 @@
 
   #shopify-section-{{ section.id }} .landing-label span {
     font-family: 'Georgia', serif;
-    font-size: clamp(22px, 3.5vw, 48px);
+    font-size: clamp(28px, 5.5vw, 56px);
     font-weight: 400;
     color: #1A1A1A;
     letter-spacing: 0.02em;
     display: block;
+  }
+
+  @media (max-width: 600px) {
+    #shopify-section-{{ section.id }} .landing {
+      padding-bottom: 64px;
+    }
+    #shopify-section-{{ section.id }} .landing-label {
+      padding: 22px 28px;
+    }
+    #shopify-section-{{ section.id }} .landing-label span {
+      font-size: clamp(26px, 8vw, 40px);
+      letter-spacing: 0.01em;
+    }
   }
 </style>
 
