@@ -283,41 +283,61 @@
     opacity: 1;
   }
 
-  /* ── BOOK FLIP ── */
-  #shopify-section-{{ section.id }} .book-flip-frame {
+  /* ── BOOK CAROUSEL (same format as the ceramics carousel) ── */
+  #shopify-section-{{ section.id }} .carousel {
     position: relative;
     overflow: hidden;
-    border-radius: 4px;
+    border-radius: 2px;
   }
-  #shopify-section-{{ section.id }} .book-flip-img {
+  #shopify-section-{{ section.id }} .carousel-track {
+    display: flex;
+    transition: transform 0.35s ease;
+  }
+  #shopify-section-{{ section.id }} .carousel-track img {
     width: 100%;
-    height: auto;
+    aspect-ratio: 1800 / 1164;
+    flex-shrink: 0;
+    object-fit: cover;
     display: block;
-    border-radius: 4px;
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.35s ease-in-out;
   }
-  #shopify-section-{{ section.id }} .book-flip-dots {
+  #shopify-section-{{ section.id }} .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(250,249,247,0.85);
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    color: var(--ink);
+  }
+  #shopify-section-{{ section.id }} .carousel:hover .carousel-btn { opacity: 1; }
+  #shopify-section-{{ section.id }} .carousel-btn.prev { left: 10px; }
+  #shopify-section-{{ section.id }} .carousel-btn.next { right: 10px; }
+  #shopify-section-{{ section.id }} .carousel-dots {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
+    gap: 5px;
+    margin-top: 8px;
   }
-  #shopify-section-{{ section.id }} .book-flip-dot {
-    width: 8px;
-    height: 8px;
-    padding: 0;
+  #shopify-section-{{ section.id }} .carousel-dot {
+    width: 5px;
+    height: 5px;
     border-radius: 0;
-    background: #FFFFFF;
-    border: 1.5px solid var(--soft-grey);
+    background: var(--sand);
+    border: none;
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
+    padding: 0;
+    transition: background 0.2s;
   }
-  #shopify-section-{{ section.id }} .book-flip-dot.active {
-    background: var(--sage-dark);
-    border-color: var(--sage-dark);
-  }
+  #shopify-section-{{ section.id }} .carousel-dot.active { background: var(--ink); }
 
   /* ── NEWSLETTER ── */
   #shopify-section-{{ section.id }} .newsletter-box {
@@ -455,23 +475,21 @@
     <p id="hero-message-box-{{ section.id }}" style="font-size:clamp(11px,1.6vw,17px); font-weight:700; color:#555555; letter-spacing:0.01em; opacity:1; text-transform:none; background:transparent; border:none; padding:10px 18px; margin:0; box-sizing:border-box; text-align:center;">welcome to my digital media gallery! ⋆⭒˚｡⋆</p>
   </div>
   <div style="max-width:820px; margin:0 auto 12px;">
-    <div class="book-flip-frame">
-      <img
-        id="book-flip-img-{{ section.id }}"
-        class="book-flip-img"
-        src="{{ 'photo-book-cover-spread.jpg' | asset_url }}"
-        width="1800"
-        height="1164"
-        alt="Photo book front and back cover mockup — visual memory archive, film photo collection"
-      />
+    <div class="carousel" id="book-carousel-{{ section.id }}">
+      <div class="carousel-track">
+        <img src="{{ 'photo-book-cover-spread.jpg' | asset_url }}" alt="Photo book front and back cover mockup — visual memory archive, film photo collection" />
+        <img src="{{ 'photo-book-pages-4-5.jpg' | asset_url }}" alt="Photo book pages 4 and 5 — film photo collection, winter lake photo" />
+        <img src="{{ 'photo-book-pages-6-7.jpg' | asset_url }}" alt="Photo book pages 6 and 7 — moments in my head, Japan street photo with cat drawing" />
+      </div>
+      <button class="carousel-btn prev" aria-label="Previous page">&#8592;</button>
+      <button class="carousel-btn next" aria-label="Next page">&#8594;</button>
+    </div>
+    <div class="carousel-dots" id="book-dots-{{ section.id }}">
+      <button class="carousel-dot active" data-i="0" aria-label="Cover"></button>
+      <button class="carousel-dot" data-i="1" aria-label="Pages 4-5"></button>
+      <button class="carousel-dot" data-i="2" aria-label="Pages 6-7"></button>
     </div>
     <p style="margin-top:14px; font-size:12px; letter-spacing:0.1em; text-transform:lowercase; text-align:center; opacity:0.55;">film photo collection &mdash; coming soon</p>
-    <p style="margin-top:4px; font-size:11px; letter-spacing:0.08em; text-transform:lowercase; text-align:center; opacity:0.4;">(click the book to flip through a few pages)</p>
-    <div class="book-flip-dots" id="book-flip-dots-{{ section.id }}">
-      <button class="book-flip-dot active" data-index="0" aria-label="Cover"></button>
-      <button class="book-flip-dot" data-index="1" aria-label="Page 5"></button>
-      <button class="book-flip-dot" data-index="2" aria-label="Page 6"></button>
-    </div>
   </div>
   <div class="newsletter-box">
     {% form 'customer', class: 'newsletter-form' %}
@@ -557,47 +575,34 @@
   if (heroPhoto && heroPhoto.complete) syncMessageBoxWidth();
   else if (heroPhoto) heroPhoto.addEventListener('load', syncMessageBoxWidth);
 
-  // Book slide
-  var bookPages = [
-    { src: '{{ "photo-book-cover-spread.jpg" | asset_url }}', alt: 'Photo book front and back cover mockup — visual memory archive, film photo collection' },
-    { src: '{{ "photo-book-pages-4-5.jpg" | asset_url }}', alt: 'Photo book pages 4 and 5 — film photo collection, winter lake photo' },
-    { src: '{{ "photo-book-pages-6-7.jpg" | asset_url }}', alt: 'Photo book pages 6 and 7 — moments in my head, Japan street photo with cat drawing' }
-  ];
-  var bookImg = document.getElementById('book-flip-img-{{ section.id }}');
-  var bookDots = document.querySelectorAll('#book-flip-dots-{{ section.id }} .book-flip-dot');
-  var bookIndex = 0;
-  var bookFlipping = false;
-  var SLIDE_MS = 350;
+  // Book carousel (same format as the ceramics carousel)
+  var bookState = { idx: 0 };
+  var bookTrack = document.querySelector('#book-carousel-{{ section.id }} .carousel-track');
+  var bookDots = document.querySelectorAll('#book-dots-{{ section.id }} .carousel-dot');
+  var bookSlideCount = bookDots.length;
 
-  function goToBookPage(nextIndex) {
-    if (bookFlipping || nextIndex === bookIndex || !bookImg) return;
-    bookFlipping = true;
-    var forward = nextIndex > bookIndex;
-    bookImg.style.transition = 'transform ' + SLIDE_MS + 'ms ease-in';
-    bookImg.style.transform = 'translateX(' + (forward ? '-100%' : '100%') + ')';
-    setTimeout(function () {
-      bookIndex = nextIndex;
-      bookImg.src = bookPages[bookIndex].src;
-      bookImg.alt = bookPages[bookIndex].alt;
-      bookDots.forEach(function (d, i) { d.classList.toggle('active', i === bookIndex); });
-      bookImg.style.transition = 'none';
-      bookImg.style.transform = 'translateX(' + (forward ? '100%' : '-100%') + ')';
-      // force reflow so the next transition actually animates
-      void bookImg.offsetWidth;
-      bookImg.style.transition = 'transform ' + SLIDE_MS + 'ms ease-out';
-      bookImg.style.transform = 'translateX(0)';
-      bookFlipping = false;
-    }, SLIDE_MS);
+  function bookGoTo(idx) {
+    if (!bookTrack) return;
+    bookTrack.style.transform = 'translateX(-' + (idx * 100) + '%)';
+    bookState.idx = idx;
+    bookDots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
   }
 
-  if (bookImg) {
-    bookImg.addEventListener('click', function () {
-      goToBookPage((bookIndex + 1) % bookPages.length);
+  var bookPrevBtn = document.querySelector('#book-carousel-{{ section.id }} .carousel-btn.prev');
+  var bookNextBtn = document.querySelector('#book-carousel-{{ section.id }} .carousel-btn.next');
+  if (bookPrevBtn) {
+    bookPrevBtn.addEventListener('click', function () {
+      bookGoTo(Math.max(0, bookState.idx - 1));
+    });
+  }
+  if (bookNextBtn) {
+    bookNextBtn.addEventListener('click', function () {
+      bookGoTo(Math.min(bookSlideCount - 1, bookState.idx + 1));
     });
   }
   bookDots.forEach(function (dot) {
     dot.addEventListener('click', function () {
-      goToBookPage(parseInt(dot.dataset.index, 10));
+      bookGoTo(parseInt(dot.dataset.i, 10));
     });
   });
 })();
