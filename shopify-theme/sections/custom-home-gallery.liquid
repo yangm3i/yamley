@@ -125,19 +125,6 @@
     filter: blur(50px);
   }
 
-  #shopify-section-{{ section.id }} .hero-logo {
-    width: 190px;
-    height: 190px;
-    object-fit: contain;
-    margin-bottom: 32px;
-    opacity: 1;
-    animation: homeFloatLogo 6s ease-in-out infinite;
-  }
-  @keyframes homeFloatLogo {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-8px); }
-  }
-
   #shopify-section-{{ section.id }} .hero p {
     font-size: 14px;
     letter-spacing: 0.12em;
@@ -313,10 +300,11 @@
     display: flex;
     gap: 10px;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
   #shopify-section-{{ section.id }} .newsletter-input {
-    flex: 1 1 220px;
+    flex: 1 1 140px;
+    min-width: 0;
     max-width: 280px;
     padding: 11px 18px;
     font-family: var(--font);
@@ -324,7 +312,7 @@
     color: var(--ink);
     background: #FFFFFF;
     border: 1.5px solid #D8D8D8;
-    border-radius: 999px;
+    border-radius: 0;
     outline: none;
     text-align: center;
   }
@@ -332,6 +320,8 @@
     border-color: var(--sage-dark);
   }
   #shopify-section-{{ section.id }} .newsletter-submit {
+    flex: 0 0 auto;
+    white-space: nowrap;
     font-family: var(--font);
     font-size: 12px;
     letter-spacing: 0.12em;
@@ -430,11 +420,6 @@
 <section class="hero">
   <div class="hero-bg-circle a"></div>
   <div class="hero-bg-circle b"></div>
-  <img
-    class="hero-logo"
-    src="{{ 'icons--yam-flower---cropped.png' | asset_url }}"
-    alt="yam"
-  />
   <div style="border: 1.5px solid rgba(58, 43, 29, 0.7); border-radius: 10px; background: rgba(255, 255, 255, 0.85); box-shadow: 4px 4px 0 #9C9C9C; padding: 32px 24px 24px; margin: 0 auto 32px; max-width: 820px; position: relative; z-index: 1;">
   <div class="hero-subheader"></div>
   <div style="margin-top:28px; margin-bottom:32px; display:flex; justify-content:center;">
