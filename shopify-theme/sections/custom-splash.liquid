@@ -42,12 +42,16 @@
   }
 
   #shopify-section-{{ section.id }} .landing-label span {
-    font-family: 'Georgia', serif;
+    font-family: "pf-pixelscript", serif;
     font-size: clamp(28px, 5.5vw, 56px);
     font-weight: 400;
     color: #1A1A1A;
     letter-spacing: 0.02em;
     display: block;
+  }
+
+  #shopify-section-{{ section.id }} .landing-label span .cat-face {
+    font-family: 'Georgia', serif;
   }
 
   @media (max-width: 600px) {
@@ -67,7 +71,7 @@
 <div class="landing" onclick="window.location='{{ pages.home.url | default: '/pages/home' }}'">
   <div class="landing-bg"></div>
   <a class="landing-label" href="{{ pages.home.url | default: '/pages/home' }}">
-    <span>welcome! click to enter ₍^. ̫ .^₎⟆</span>
+    <span>welcome! click to enter <span class="cat-face">₍^. ̫ .^₎⟆</span></span>
   </a>
 </div>
 
