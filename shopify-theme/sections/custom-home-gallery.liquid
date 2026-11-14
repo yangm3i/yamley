@@ -431,8 +431,10 @@
   }
 
   @media (max-width: 600px) {
-    #shopify-section-{{ section.id }} nav { padding: 16px 20px; }
-    #shopify-section-{{ section.id }} .nav-links { gap: 20px; }
+    #shopify-section-{{ section.id }} nav { padding: 16px 12px; }
+    #shopify-section-{{ section.id }} .nav-links { gap: 4px; }
+    #shopify-section-{{ section.id }} .nav-links a { padding: 6px 8px; letter-spacing: 0.05em; }
+    #shopify-section-{{ section.id }} .nav-logo img { width: 36px; height: 36px; }
     #shopify-section-{{ section.id }} section { padding: 64px 20px; }
     #shopify-section-{{ section.id }} .hero { padding: 100px 20px 60px; }
 
@@ -468,6 +470,7 @@
     <li><a href="/collections/all">Shop</a></li>
     <li><a href="{{ pages.work.url | default: '/pages/work' }}">Work</a></li>
     <li><a href="{{ pages.about.url | default: '/pages/about' }}">About</a></li>
+    <li><a href="{{ routes.cart_url }}">Cart (<span class="nav-cart-count">{{ cart.item_count }}</span>)</a></li>
   </ul>
 </nav>
 
