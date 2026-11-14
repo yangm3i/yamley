@@ -124,24 +124,6 @@
     margin: 0 auto;
   }
 
-  #shopify-section-{{ section.id }} .shop-searchbar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    width: 320px;
-    max-width: 100%;
-    margin: 0 auto 28px;
-    padding: 16px 26px;
-    background: #EFEFEF;
-    border: 1px solid var(--soft-grey);
-    border-radius: 999px;
-    color: #777777;
-    font-size: 16px;
-    letter-spacing: 0.05em;
-    text-transform: lowercase;
-  }
-
   #shopify-section-{{ section.id }} .shop-empty {
     text-align: center;
     padding: 40px 12px 24px;
@@ -171,10 +153,39 @@
   }
 
   #shopify-section-{{ section.id }} .shop-card {
+    position: relative;
+  }
+  #shopify-section-{{ section.id }} .shop-card-link {
     display: block;
     text-decoration: none;
     color: var(--ink);
   }
+  #shopify-section-{{ section.id }} .shop-quick-add {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font);
+    font-size: 18px;
+    line-height: 1;
+    color: var(--ink);
+    background: #FFFFFF;
+    border-top: 1.5px solid #FFFFFF;
+    border-left: 1.5px solid #FFFFFF;
+    border-bottom: 1.5px solid var(--soft-grey);
+    border-right: 1.5px solid var(--soft-grey);
+    border-radius: 0;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  #shopify-section-{{ section.id }} .shop-quick-add:hover { background: var(--sage-light); }
+  #shopify-section-{{ section.id }} .shop-quick-add.added { background: var(--sage-light); }
+  #shopify-section-{{ section.id }} .shop-quick-add:disabled { cursor: default; }
   #shopify-section-{{ section.id }} .shop-card-frame {
     position: relative;
     aspect-ratio: 1 / 1;
@@ -254,22 +265,24 @@
     <div class="shop-inner reveal">
       <h1 class="shop-title">product collection</h1>
       <div class="shop-panel">
-        <div class="shop-searchbar">
-          shop
-        </div>
 
         {% if collection.products.size > 0 %}
           <div class="shop-grid">
             {% for product in collection.products %}
-              <a class="shop-card" href="{{ product.url }}">
-                <div class="shop-card-frame">
-                  {% if product.featured_image %}
-                    <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | default: product.title }}" loading="lazy" width="600" height="600">
-                  {% endif %}
-                </div>
-                <div class="shop-card-title">{{ product.title | downcase }}</div>
-                <div class="shop-card-price">{{ product.price | money }}</div>
-              </a>
+              <div class="shop-card">
+                <a class="shop-card-link" href="{{ product.url }}">
+                  <div class="shop-card-frame">
+                    {% if product.featured_image %}
+                      <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | default: product.title }}" loading="lazy" width="600" height="600">
+                    {% endif %}
+                  </div>
+                  <div class="shop-card-title">{{ product.title | downcase }}</div>
+                  <div class="shop-card-price">{{ product.price | money }}</div>
+                </a>
+                {% if product.available %}
+                  <button type="button" class="shop-quick-add" data-variant-id="{{ product.selected_or_first_available_variant.id }}" aria-label="Add {{ product.title | escape }} to cart">+</button>
+                {% endif %}
+              </div>
             {% endfor %}
           </div>
         {% else %}
@@ -301,6 +314,22 @@
     { threshold: 0.12 }
   );
   document.querySelectorAll('#shopify-section-{{ section.id }} .reveal').forEach(function (el) { observer.observe(el); });
+
+  document.querySelectorAll('#shopify-section-{{ section.id }} .shop-quick-add').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      btn.disabled = true;
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ items: [{ id: Number(btn.dataset.variantId), quantity: 1 }] })
+      })
+        .then(function (res) { if (!res.ok) throw new Error(); btn.textContent = '✓'; btn.classList.add('added'); })
+        .catch(function () { btn.textContent = '!'; })
+        .finally(function () {
+          setTimeout(function () { btn.textContent = '+'; btn.classList.remove('added'); btn.disabled = false; }, 1500);
+        });
+    });
+  });
 })();
 </script>
 
