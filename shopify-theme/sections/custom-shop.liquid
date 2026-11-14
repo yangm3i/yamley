@@ -104,6 +104,15 @@
     margin: 0 auto;
   }
 
+  #shopify-section-{{ section.id }} .shop-title {
+    font-family: "pf-pixelscript", serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 400;
+    color: #4A4A4A;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
   #shopify-section-{{ section.id }} .shop-panel {
     border: 1.5px solid #33586A;
     border-radius: 10px;
@@ -243,6 +252,7 @@
 <div class="shop-page-wrap">
   <section id="shop-{{ section.id }}">
     <div class="shop-inner reveal">
+      <h1 class="shop-title">product collection</h1>
       <div class="shop-panel">
         <div class="shop-searchbar">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
