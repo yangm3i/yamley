@@ -177,13 +177,22 @@
   #shopify-section-{{ section.id }} .cart-qty-btn.is-disabled { opacity: 0.3; pointer-events: none; }
   #shopify-section-{{ section.id }} .cart-qty-num { min-width: 22px; text-align: center; font-size: 13px; }
   #shopify-section-{{ section.id }} .cart-remove {
-    margin-left: 10px;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--ink);
-    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-left: 8px;
+    opacity: 0.6;
+    transition: opacity 0.15s;
   }
-  #shopify-section-{{ section.id }} .cart-remove:hover { opacity: 0.85; }
+  #shopify-section-{{ section.id }} .cart-remove:hover { opacity: 1; }
+  #shopify-section-{{ section.id }} .cart-remove img {
+    width: 13px;
+    height: 15px;
+    image-rendering: pixelated;
+    display: block;
+  }
 
   #shopify-section-{{ section.id }} .cart-summary { margin-top: 22px; text-align: right; }
   #shopify-section-{{ section.id }} .cart-total-row {
@@ -308,7 +317,7 @@
                       {% else %}
                         <a class="cart-qty-btn" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity={{ item.quantity | plus: 1 }}" aria-label="Increase quantity of {{ item.product.title | escape }}">+</a>
                       {% endif %}
-                      <a class="cart-remove" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0">remove</a>
+                      <a class="cart-remove" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0" aria-label="Remove {{ item.product.title | escape }}"><img src="{{ 'cart-trash-pixel.png' | asset_url }}" alt="" width="13" height="15"></a>
                     </div>
                   </div>
                   <div class="cart-line-total">{{ item.final_line_price | money }}</div>
