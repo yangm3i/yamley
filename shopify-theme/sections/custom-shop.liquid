@@ -224,19 +224,60 @@
   #shopify-section-{{ section.id }} .shop-quick-add:hover { background: var(--sage-light); }
   #shopify-section-{{ section.id }} .shop-quick-add.added { background: var(--sage-light); }
   #shopify-section-{{ section.id }} .shop-quick-add:disabled { cursor: default; }
+  #shopify-section-{{ section.id }} .shop-card-media {
+    position: relative;
+    margin-bottom: 10px;
+  }
   #shopify-section-{{ section.id }} .shop-card-frame {
+    display: block;
     position: relative;
     aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 2px;
     background: var(--sage-light);
-    margin-bottom: 10px;
+  }
+  #shopify-section-{{ section.id }} .shop-card-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.3s ease;
+  }
+  #shopify-section-{{ section.id }} .shop-card-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    overflow: hidden;
   }
   #shopify-section-{{ section.id }} .shop-card-frame img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
     transition: transform 0.3s ease;
+  }
+  #shopify-section-{{ section.id }} .shop-card-arrow {
+    position: absolute;
+    bottom: 10px;
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #FFFFFF;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.55), 0 1px 6px rgba(0, 0, 0, 0.45);
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  #shopify-section-{{ section.id }} .shop-card-arrow.next { right: 10px; }
+  #shopify-section-{{ section.id }} .shop-card-media:hover .shop-card-arrow,
+  #shopify-section-{{ section.id }} .shop-card-arrow:focus-visible { opacity: 1; }
+  @media (hover: none) {
+    #shopify-section-{{ section.id }} .shop-card-arrow { opacity: 0.85; }
   }
   #shopify-section-{{ section.id }} .shop-card:hover .shop-card-frame img {
     transform: scale(1.04);
@@ -321,18 +362,27 @@
                 {{ product.type | handleize }}{% for tag in product.tags %} {{ tag | handleize }}{% endfor %}
               {%- endcapture -%}
               <div class="shop-card" data-cats="{{ product_cats | strip }}">
+                <div class="shop-card-media">
+                  <a class="shop-card-frame" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+                    <div class="shop-card-track">
+                      {% for image in product.images %}
+                        <div class="shop-card-slide">
+                          <img src="{{ image | image_url: width: 600 }}" alt="{{ image.alt | default: product.title | escape }}" loading="lazy" width="600" height="600">
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </a>
+                  {% if product.images.size > 1 %}
+                    <button type="button" class="shop-card-arrow next" aria-label="Next photo of {{ product.title | escape }}">&#8594;</button>
+                  {% endif %}
+                  {% if product.available %}
+                    <button type="button" class="shop-quick-add" data-variant-id="{{ product.selected_or_first_available_variant.id }}" aria-label="Add {{ product.title | escape }} to cart">+</button>
+                  {% endif %}
+                </div>
                 <a class="shop-card-link" href="{{ product.url }}">
-                  <div class="shop-card-frame">
-                    {% if product.featured_image %}
-                      <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | default: product.title }}" loading="lazy" width="600" height="600">
-                    {% endif %}
-                  </div>
                   <div class="shop-card-title">{{ product.title | downcase }}</div>
                   <div class="shop-card-price">{{ product.price | money }}</div>
                 </a>
-                {% if product.available %}
-                  <button type="button" class="shop-quick-add" data-variant-id="{{ product.selected_or_first_available_variant.id }}" aria-label="Add {{ product.title | escape }} to cart">+</button>
-                {% endif %}
               </div>
             {% endfor %}
           </div>
@@ -368,6 +418,24 @@
   document.querySelectorAll('#shopify-section-{{ section.id }} .reveal').forEach(function (el) { observer.observe(el); });
 
   var root = document.getElementById('shopify-section-{{ section.id }}');
+
+  root.querySelectorAll('.shop-card-media').forEach(function (media) {
+    var track = media.querySelector('.shop-card-track');
+    var count = track.children.length;
+    var idx = 0;
+    function go(step) {
+      idx = (idx + step + count) % count;
+      track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+    }
+    if (count > 1) {
+      media.addEventListener('pointerenter', function () {
+        track.querySelectorAll('img').forEach(function (img) { img.loading = 'eager'; });
+      }, { once: true });
+    }
+    media.querySelectorAll('.shop-card-arrow').forEach(function (btn) {
+      btn.addEventListener('click', function () { go(1); });
+    });
+  });
   var filters = root.querySelectorAll('.shop-filter');
   var cards = root.querySelectorAll('.shop-card');
   var filterEmpty = root.querySelector('.shop-filter-empty');
