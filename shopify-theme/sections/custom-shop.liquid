@@ -259,7 +259,7 @@
     <li><a href="/collections/all" class="active">Shop</a></li>
     <li><a href="{{ pages.work.url | default: '/pages/work' }}">Work</a></li>
     <li><a href="{{ pages.about.url | default: '/pages/about' }}">About</a></li>
-    <li><a href="{{ routes.cart_url }}">Cart (<span class="nav-cart-count">{{ cart.item_count }}</span>)</a></li>
+    <li><a href="{{ routes.cart_url }}" aria-label="Cart"><img src="{{ 'nav-cart-pixel.png' | asset_url }}" alt="" width="18" height="14" style="height:14px; width:auto; vertical-align:-2px; image-rendering:pixelated; margin-right:6px;"><span class="nav-cart-count">{{ cart.item_count }}</span></a></li>
   </ul>
 </nav>
 

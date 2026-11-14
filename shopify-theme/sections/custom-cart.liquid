@@ -1,0 +1,365 @@
+<style>
+  #shopify-section-{{ section.id }} *, #shopify-section-{{ section.id }} *::before, #shopify-section-{{ section.id }} *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #FAF9F7;
+    --ink:     #1A1A1A;
+    --rose:    #9FB8C3;
+    --sage:    #B5C4B1;
+    --sand:    #D4C5A9;
+    --blush:   #CDE3ED;
+    --soft-grey: #C4C4C4;
+    --sage-light: #DCE6D9;
+    --sage-dark: #A3B89D;
+    --font:    'Roboto Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  #shopify-section-{{ section.id }} {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  #shopify-section-{{ section.id }} nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #DDDDDD;
+    transition: border-color 0.3s;
+  }
+
+  #shopify-section-{{ section.id }} .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  #shopify-section-{{ section.id }} .nav-logo img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .nav-links {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+  }
+  #shopify-section-{{ section.id }} .nav-links a {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: var(--ink);
+    opacity: 0.85;
+    padding: 6px 16px;
+    background: #FFFFFF;
+    border-top: 1.5px solid #FFFFFF;
+    border-left: 1.5px solid #FFFFFF;
+    border-bottom: 1.5px solid var(--soft-grey);
+    border-right: 1.5px solid var(--soft-grey);
+    border-radius: 0;
+    transition: opacity 0.15s, background 0.15s;
+  }
+  #shopify-section-{{ section.id }} .nav-links a:hover { opacity: 1; }
+  #shopify-section-{{ section.id }} .nav-links a.active {
+    opacity: 1;
+    background: var(--sage-light);
+    border-top: 1.5px solid var(--sage-dark);
+    border-left: 1.5px solid var(--sage-dark);
+    border-bottom: 1.5px solid #FFFFFF;
+    border-right: 1.5px solid #FFFFFF;
+  }
+
+  /* ── SECTION SHARED ── */
+  #shopify-section-{{ section.id }} section { padding: 96px 48px; }
+
+  #shopify-section-{{ section.id }} .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    margin-bottom: 12px;
+  }
+
+  /* ── CART ── */
+  #shopify-section-{{ section.id }} .shop-page-wrap { padding-top: 80px; }
+  #shopify-section-{{ section.id }} .shop-inner { max-width: 820px; margin: 0 auto; }
+  #shopify-section-{{ section.id }} .shop-title {
+    font-family: "pf-pixelscript", serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 400;
+    color: #4A4A4A;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+  #shopify-section-{{ section.id }} .shop-panel {
+    border: 1.5px solid #33586A;
+    border-radius: 10px;
+    background: #FFFFFF;
+    box-shadow: 4px 4px 0 #9C9C9C;
+    padding: 28px 24px 24px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+  #shopify-section-{{ section.id }} .shop-empty { text-align: center; padding: 40px 12px 24px; }
+  #shopify-section-{{ section.id }} .shop-empty h2 {
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 200;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  #shopify-section-{{ section.id }} .shop-empty p { font-size: 14px; line-height: 1.9; opacity: 0.65; }
+  #shopify-section-{{ section.id }} .shop-empty a { color: var(--ink); }
+
+  #shopify-section-{{ section.id }} .cart-list { list-style: none; }
+  #shopify-section-{{ section.id }} .cart-row {
+    display: grid;
+    grid-template-columns: 96px 1fr auto;
+    gap: 18px;
+    align-items: start;
+    padding: 18px 0;
+    border-bottom: 1px solid #E6E6E6;
+  }
+  #shopify-section-{{ section.id }} .cart-row:first-child { padding-top: 0; }
+  #shopify-section-{{ section.id }} .cart-thumb {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--sage-light);
+  }
+  #shopify-section-{{ section.id }} .cart-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #shopify-section-{{ section.id }} .cart-item-title {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    text-decoration: none;
+    margin-bottom: 4px;
+  }
+  #shopify-section-{{ section.id }} .cart-item-variant,
+  #shopify-section-{{ section.id }} .cart-item-price { font-size: 11px; letter-spacing: 0.1em; opacity: 0.55; }
+  #shopify-section-{{ section.id }} .cart-line-total { font-size: 13px; letter-spacing: 0.05em; white-space: nowrap; }
+
+  #shopify-section-{{ section.id }} .cart-qty { display: flex; align-items: center; gap: 6px; margin-top: 12px; }
+  #shopify-section-{{ section.id }} .cart-qty-btn {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: none;
+    background: #FFFFFF;
+    border-top: 1.5px solid #FFFFFF;
+    border-left: 1.5px solid #FFFFFF;
+    border-bottom: 1.5px solid var(--soft-grey);
+    border-right: 1.5px solid var(--soft-grey);
+  }
+  #shopify-section-{{ section.id }} .cart-qty-btn:hover { background: var(--sage-light); }
+  #shopify-section-{{ section.id }} .cart-qty-btn.is-disabled { opacity: 0.3; pointer-events: none; }
+  #shopify-section-{{ section.id }} .cart-qty-num { min-width: 22px; text-align: center; font-size: 13px; }
+  #shopify-section-{{ section.id }} .cart-remove {
+    margin-left: 10px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    opacity: 0.5;
+  }
+  #shopify-section-{{ section.id }} .cart-remove:hover { opacity: 0.85; }
+
+  #shopify-section-{{ section.id }} .cart-summary { margin-top: 22px; text-align: right; }
+  #shopify-section-{{ section.id }} .cart-total-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+  }
+  #shopify-section-{{ section.id }} .cart-tax-note { margin: 8px 0 18px; font-size: 11px; letter-spacing: 0.05em; opacity: 0.55; }
+  #shopify-section-{{ section.id }} .cart-checkout {
+    font-family: var(--font);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: lowercase;
+    color: #F2F2F2;
+    background: #4A4A4A;
+    padding: 12px 36px;
+    border-top: 2px solid #D8D8D8;
+    border-left: 2px solid #D8D8D8;
+    border-bottom: 2px solid #2A2A2A;
+    border-right: 2px solid #2A2A2A;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  #shopify-section-{{ section.id }} .cart-checkout:hover {
+    background: #5C5C5C;
+    border-top: 2px solid #2A2A2A;
+    border-left: 2px solid #2A2A2A;
+    border-bottom: 2px solid #D8D8D8;
+    border-right: 2px solid #D8D8D8;
+  }
+  #shopify-section-{{ section.id }} .cart-extra-buttons { max-width: 320px; margin: 14px 0 0 auto; }
+
+  @media (max-width: 560px) {
+    #shopify-section-{{ section.id }} .cart-row { grid-template-columns: 72px 1fr; gap: 14px; }
+    #shopify-section-{{ section.id }} .cart-line-total { grid-column: 2; }
+    #shopify-section-{{ section.id }} .cart-summary { text-align: center; }
+    #shopify-section-{{ section.id }} .cart-total-row { justify-content: center; }
+    #shopify-section-{{ section.id }} .cart-checkout { width: 100%; }
+    #shopify-section-{{ section.id }} .cart-extra-buttons { max-width: none; margin: 14px 0 0; }
+  }
+
+  /* ── FOOTER ── */
+  #shopify-section-{{ section.id }} footer {
+    background: #FFFFFF;
+    color: var(--ink);
+    border-top: 1px solid #DDDDDD;
+    text-align: center;
+    padding: 24px 48px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    opacity: 0.4;
+  }
+
+  /* ── REVEAL ANIMATION ── */
+  #shopify-section-{{ section.id }} .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  #shopify-section-{{ section.id }} .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    #shopify-section-{{ section.id }} nav { padding: 16px 12px; }
+    #shopify-section-{{ section.id }} .nav-links { gap: 4px; }
+    #shopify-section-{{ section.id }} .nav-links a { padding: 6px 8px; letter-spacing: 0.05em; }
+    #shopify-section-{{ section.id }} .nav-logo img { width: 36px; height: 36px; }
+    #shopify-section-{{ section.id }} section { padding: 64px 20px; }
+  }
+</style>
+
+<div id="shopify-section-{{ section.id }}">
+
+<nav id="nav-{{ section.id }}">
+  <a class="nav-logo" href="{{ pages.home.url | default: '/pages/home' }}">
+    <img src="{{ 'icons--yam-flower---cropped.png' | asset_url }}" style="opacity:1;" alt="yam logo" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="{{ pages.home.url | default: '/pages/home' }}">Home</a></li>
+    <li><a href="/collections/all">Shop</a></li>
+    <li><a href="{{ pages.work.url | default: '/pages/work' }}">Work</a></li>
+    <li><a href="{{ pages.about.url | default: '/pages/about' }}">About</a></li>
+    <li><a href="{{ routes.cart_url }}" class="active" aria-label="Cart"><img src="{{ 'nav-cart-pixel.png' | asset_url }}" alt="" width="18" height="14" style="height:14px; width:auto; vertical-align:-2px; image-rendering:pixelated; margin-right:6px;"><span class="nav-cart-count">{{ cart.item_count }}</span></a></li>
+  </ul>
+</nav>
+
+<div class="shop-page-wrap">
+  <section id="cart-{{ section.id }}">
+    <div class="shop-inner reveal">
+      <h1 class="shop-title">your cart</h1>
+      <div class="shop-panel">
+        {% if cart.item_count > 0 %}
+          <form action="{{ routes.cart_url }}" method="post">
+            <ul class="cart-list">
+              {% for item in cart.items %}
+                <li class="cart-row">
+                  <a class="cart-thumb" href="{{ item.url }}">
+                    {% if item.image %}
+                      <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.image.alt | default: item.product.title | escape }}" width="120" height="120" loading="lazy">
+                    {% endif %}
+                  </a>
+                  <div class="cart-info">
+                    <a class="cart-item-title" href="{{ item.url }}">{{ item.product.title | downcase }}</a>
+                    {% unless item.product.has_only_default_variant %}
+                      <div class="cart-item-variant">{{ item.variant.title | downcase }}</div>
+                    {% endunless %}
+                    <div class="cart-item-price">{{ item.final_price | money }}</div>
+                    <div class="cart-qty">
+                      <a class="cart-qty-btn" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity={{ item.quantity | minus: 1 }}" aria-label="Decrease quantity of {{ item.product.title | escape }}">&minus;</a>
+                      <span class="cart-qty-num">{{ item.quantity }}</span>
+                      {% assign at_stock_limit = false %}
+                      {% if item.variant.inventory_management == 'shopify' and item.variant.inventory_policy == 'deny' and item.quantity >= item.variant.inventory_quantity %}
+                        {% assign at_stock_limit = true %}
+                      {% endif %}
+                      {% if at_stock_limit %}
+                        <span class="cart-qty-btn is-disabled" aria-hidden="true">+</span>
+                      {% else %}
+                        <a class="cart-qty-btn" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity={{ item.quantity | plus: 1 }}" aria-label="Increase quantity of {{ item.product.title | escape }}">+</a>
+                      {% endif %}
+                      <a class="cart-remove" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0">remove</a>
+                    </div>
+                  </div>
+                  <div class="cart-line-total">{{ item.final_line_price | money }}</div>
+                </li>
+              {% endfor %}
+            </ul>
+            <div class="cart-summary">
+              <div class="cart-total-row"><span>estimated total</span><span>{{ cart.total_price | money_with_currency }}</span></div>
+              <p class="cart-tax-note">taxes, discounts and shipping calculated at checkout.</p>
+              <button type="submit" name="checkout" class="cart-checkout">check out</button>
+              {% if additional_checkout_buttons %}
+                <div class="cart-extra-buttons">{{ content_for_additional_checkout_buttons }}</div>
+              {% endif %}
+            </div>
+          </form>
+        {% else %}
+          <div class="shop-empty">
+            <h2>your cart is empty</h2>
+            <p><a href="/collections/all">browse the product collection</a></p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <img src="{{ 'logo-ink.png' | asset_url }}" alt="yam logo" style="height:14px; width:auto; vertical-align:middle; margin-right:6px; opacity:0.75;" />yamley &nbsp;·&nbsp; digital media scrapbook
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var nav = document.getElementById('nav-{{ section.id }}');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  var observer = new IntersectionObserver(
+    function (entries) { entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible'); }); },
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('#shopify-section-{{ section.id }} .reveal').forEach(function (el) { observer.observe(el); });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Custom cart",
+  "settings": []
+}
+{% endschema %}
